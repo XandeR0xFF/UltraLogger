@@ -1,0 +1,40 @@
+﻿using Microsoft.Extensions.DependencyInjection;
+using UltraLogger.Core.Application.Common;
+using UltraLogger.Core.Application.Services;
+using UltraLogger.Core.Domain.Aggregates.Defectograms;
+using UltraLogger.Core.Domain.Aggregates.Plates;
+using UltraLogger.Core.Domain.Aggregates.Users;
+using UltraLogger.Core.Domain.Aggregates.USTModes;
+using UltraLogger.Infrastructure;
+using UltraLogger.Infrastructure.Data;
+using UltraLogger.Infrastructure.Repositories;
+using UltraLogger.UI;
+
+namespace UltraLogger.Core
+{
+    internal static class Extensions
+    {
+        public static void AddInfrastructureServices(this IServiceCollection services)
+        {
+            services.AddTransient<IDbConnectionFactory>(_ => new SQLiteConnectionFactory("UltraLogger.db"));
+            services.AddSingleton<UnitOfWork>();
+            services.AddSingleton<ISessionManager, SessionManager>();
+            services.AddTransient<IPasswordHasher, PasswordHasher>();
+            services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<IUSTModeRepository, USTModeRepository>();
+            services.AddTransient<IDefectogramRepository, DefectogramRepository>();
+            services.AddTransient<IPlateRepository, PlateRepository>();
+        }
+
+        public static void AddApplicationServices(this IServiceCollection services)
+        {
+            services.AddTransient<AuthenticationService>();
+            services.AddTransient<DefectogramService>();
+        }
+
+        public static void AddUIServices(this IServiceCollection services)
+        {
+            services.AddTransient<MainForm>();
+        }
+    }
+}
