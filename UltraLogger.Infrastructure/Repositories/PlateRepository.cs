@@ -1,5 +1,4 @@
-﻿using UltraLogger.Core.Domain.Aggregates.Defectograms;
-using UltraLogger.Core.Domain.Aggregates.Plates;
+﻿using UltraLogger.Core.Domain.Aggregates.Plates;
 using UltraLogger.Core.Domain.Common;
 using UltraLogger.Infrastructure.Data;
 
@@ -12,9 +11,22 @@ namespace UltraLogger.Infrastructure.Repositories
 
         public Plate? GetByDefectogramId(long defectogramId)
         {
-            string sql = "SELECT * FROM Plates WHERE DefectogramId = @DefectogramId";
+            string plateSql = "SELECT * FROM Plates WHERE DefectogramId = @DefectogramId";
 
-            return _uow.QuerySingleOrDefault<Plate>(sql, new { DefectogramId = defectogramId });
+            Plate? plate = _uow.QuerySingleOrDefault<Plate>(plateSql, new { DefectogramId = defectogramId });
+
+            if (plate != null)
+            {
+                string platePartSql = "SELECT * FROM PlateParts WHERE PlateId = @PlateId ORDER BY \"Number\"";
+                IEnumerable<PlatePart> parts = _uow.Query<PlatePart>(platePartSql, new { PlateId = plate.Id });
+
+                foreach (var platePart in parts)
+                {
+                    plate.AddPart(platePart);
+                }
+            }
+
+            return plate;
         }
     }
 }

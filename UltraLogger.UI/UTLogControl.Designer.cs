@@ -79,6 +79,7 @@
             entriesList.TabIndex = 0;
             entriesList.UseCompatibleStateImageBehavior = false;
             entriesList.View = View.Details;
+            entriesList.SelectedIndexChanged += entriesList_SelectedIndexChanged;
             // 
             // defectogramColumn
             // 

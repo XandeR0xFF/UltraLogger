@@ -9,7 +9,7 @@
         public int Width { get; set; }
         public int Length { get; set; }
         public USTModeDTO? UstMode { get; set; }
-        public DefectogramUserDTO? MyProperty { get; set; }
+        public NDTSpecialistDTO? Creator { get; set; }
         public PlateDTO? Plate { get; set; }
     }
 }

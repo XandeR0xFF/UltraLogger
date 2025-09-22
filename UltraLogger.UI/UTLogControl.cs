@@ -29,13 +29,22 @@ namespace UltraLogger.UI
             UpdateData();
         }
 
+        private void entriesList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (entriesList.SelectedIndices.Count == 0)
+                return;
+
+            UpdateEntryDetails(entriesList.SelectedIndices[0]);
+            
+        }
+
         private void UpdateData()
         {
             entriesList.Items.Clear();
             entryDetails.Text = string.Empty;
             _defectograms.Clear();
 
-            _defectograms.AddRange( _defectogramService.GetAll());
+            _defectograms.AddRange(_defectogramService.GetAll());
 
             foreach (DefectogramDTO defectogram in _defectograms)
             {
@@ -49,11 +58,34 @@ namespace UltraLogger.UI
                 {
                     listViewItem.SubItems.Add($"{defectogram.Plate.MeltYear}-{defectogram.Plate.MeltNumber}-{defectogram.Plate.SlabNumber}");
                 }
-                
+
 
                 entriesList.Items.Add(listViewItem);
             }
 
+        }
+
+        private void UpdateEntryDetails(int entryIndex)
+        {
+            DefectogramDTO defectogram = _defectograms[entryIndex];
+
+            StringBuilder content = new StringBuilder();
+
+            content.AppendLine($"{defectogram.Name}");
+            content.AppendLine();
+            content.AppendLine($"Дефектоскопист: {defectogram.Creator?.LastName} {defectogram.Creator?.FirstName} {defectogram.Creator?.MiddleName}");
+            content.AppendLine();
+
+            if (defectogram.Plate != null)
+            {
+                foreach (var platePart in defectogram.Plate.Parts)
+                {
+                    content.AppendLine($"{defectogram.Plate.MeltYear}-{defectogram.Plate.MeltNumber}-{defectogram.Plate.SlabNumber}-{platePart.Number}: {platePart.Evaluation?.Name}");
+                }
+            }
+            
+
+            entryDetails.Text = content.ToString();
         }
     }
 }

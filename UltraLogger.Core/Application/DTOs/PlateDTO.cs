@@ -8,9 +8,9 @@ namespace UltraLogger.Core.Application.DTOs;
 
 public class PlateDTO
 {
-    public long DefectogramId { get; set; }
     public int MeltYear { get; set; }
     public int MeltNumber { get; set; }
     public int SlabNumber { get; set; }
+    public List<PlatePartDTO> Parts { get; set; } = new List<PlatePartDTO>();
     //public ReportDTO? Report { get; set; }
 }

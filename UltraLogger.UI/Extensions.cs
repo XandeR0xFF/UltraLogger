@@ -2,9 +2,11 @@
 using UltraLogger.Core.Application.Common;
 using UltraLogger.Core.Application.Services;
 using UltraLogger.Core.Domain.Aggregates.Defectograms;
+using UltraLogger.Core.Domain.Aggregates.Evaluations;
 using UltraLogger.Core.Domain.Aggregates.Plates;
 using UltraLogger.Core.Domain.Aggregates.Users;
 using UltraLogger.Core.Domain.Aggregates.USTModes;
+using UltraLogger.Core.Domain.Aggregates.UTResults;
 using UltraLogger.Infrastructure;
 using UltraLogger.Infrastructure.Data;
 using UltraLogger.Infrastructure.Repositories;
@@ -24,6 +26,8 @@ namespace UltraLogger.Core
             services.AddTransient<IUSTModeRepository, USTModeRepository>();
             services.AddTransient<IDefectogramRepository, DefectogramRepository>();
             services.AddTransient<IPlateRepository, PlateRepository>();
+            services.AddTransient<IUTResultRepository, UTResultRepository>();
+            services.AddTransient<IEvaluationRepository, EvaluationRepository>();
         }
 
         public static void AddApplicationServices(this IServiceCollection services)

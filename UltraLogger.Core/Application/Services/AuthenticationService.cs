@@ -27,7 +27,7 @@ namespace UltraLogger.Core.Application.Services
             return Result.Success();
         }
 
-        public Result<CurrentUserDTO> GetCurrentUser()
+        public Result<UserDTO> GetCurrentUser()
         {
             User? user = _sessionManager.CurrentUser;
             if (user == null)
@@ -36,9 +36,9 @@ namespace UltraLogger.Core.Application.Services
             return MapUserToCurrentUserDTO(user);
         }
 
-        private CurrentUserDTO MapUserToCurrentUserDTO(User user)
+        private UserDTO MapUserToCurrentUserDTO(User user)
         {
-            return new CurrentUserDTO
+            return new UserDTO
             {
                 Login = user.Login
             };

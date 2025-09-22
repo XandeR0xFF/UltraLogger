@@ -5,7 +5,7 @@ namespace UltraLogger.Core.Domain.Aggregates.Users
 {
     public interface IUserRepository : IRepository<User>
     {
+        User? GetById(long id);
         User? GetByLogin(string login);
-
     }
 }

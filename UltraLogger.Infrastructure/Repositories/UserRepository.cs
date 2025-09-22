@@ -1,5 +1,4 @@
-﻿using System.Data.Common;
-using UltraLogger.Core.Domain.Aggregates.Users;
+﻿using UltraLogger.Core.Domain.Aggregates.Users;
 using UltraLogger.Core.Domain.Common;
 using UltraLogger.Infrastructure.Data;
 
@@ -11,12 +10,16 @@ public class UserRepository(UnitOfWork uow) : IUserRepository
 
     public IUnitOfWork UnitOfWork => _uow;
 
+    public User? GetById(long id)
+    {
+        string sql = "SELECT * FROM Users WHERE Id = @Id";
+        return _uow.QuerySingleOrDefault<User>(sql, new { Id = id });
+    }
 
     public User? GetByLogin(string login)
     {
-        string sql = @"SELECT * FROM ""Users""  WHERE ""Login"" COLLATE NOCASE = @userLogin";
-        User? user = _uow.QuerySingleOrDefault<User>(sql, new { userLogin = login });
-        return user;
+        string sql = "SELECT * FROM Users  WHERE Login COLLATE NOCASE = @userLogin";
+        return _uow.QuerySingleOrDefault<User>(sql, new { userLogin = login });
     }
 
 }
