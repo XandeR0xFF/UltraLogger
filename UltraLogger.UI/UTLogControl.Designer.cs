@@ -54,6 +54,7 @@
             // splitContainer1
             // 
             splitContainer1.Dock = DockStyle.Fill;
+            splitContainer1.FixedPanel = FixedPanel.Panel2;
             splitContainer1.Location = new Point(0, 25);
             splitContainer1.Name = "splitContainer1";
             // 
@@ -65,7 +66,7 @@
             // 
             splitContainer1.Panel2.Controls.Add(entryDetails);
             splitContainer1.Size = new Size(765, 341);
-            splitContainer1.SplitterDistance = 549;
+            splitContainer1.SplitterDistance = 520;
             splitContainer1.TabIndex = 1;
             // 
             // entriesList
@@ -75,11 +76,12 @@
             entriesList.FullRowSelect = true;
             entriesList.Location = new Point(0, 0);
             entriesList.Name = "entriesList";
-            entriesList.Size = new Size(549, 341);
+            entriesList.Size = new Size(520, 341);
             entriesList.TabIndex = 0;
             entriesList.UseCompatibleStateImageBehavior = false;
             entriesList.View = View.Details;
             entriesList.SelectedIndexChanged += entriesList_SelectedIndexChanged;
+            entriesList.Resize += entriesList_Resize;
             // 
             // defectogramColumn
             // 
@@ -104,8 +106,8 @@
             // 
             // columnHeader5
             // 
-            columnHeader5.Text = "Раскат";
-            columnHeader5.Width = 100;
+            columnHeader5.Text = "Маркировка";
+            columnHeader5.Width = 50;
             // 
             // entryDetails
             // 
@@ -113,7 +115,7 @@
             entryDetails.Dock = DockStyle.Fill;
             entryDetails.Location = new Point(0, 0);
             entryDetails.Name = "entryDetails";
-            entryDetails.Size = new Size(212, 341);
+            entryDetails.Size = new Size(241, 341);
             entryDetails.TabIndex = 0;
             entryDetails.Text = "label1";
             // 

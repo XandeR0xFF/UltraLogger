@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using UltraLogger.Core.Application.DTOs;
 using UltraLogger.Core.Application.Services;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace UltraLogger.UI
 {
@@ -35,7 +36,7 @@ namespace UltraLogger.UI
                 return;
 
             UpdateEntryDetails(entriesList.SelectedIndices[0]);
-            
+
         }
 
         private void UpdateData()
@@ -78,14 +79,23 @@ namespace UltraLogger.UI
 
             if (defectogram.Plate != null)
             {
+                int i = 0;
                 foreach (var platePart in defectogram.Plate.Parts)
                 {
-                    content.AppendLine($"{defectogram.Plate.MeltYear}-{defectogram.Plate.MeltNumber}-{defectogram.Plate.SlabNumber}-{platePart.Number}: {platePart.Evaluation?.Name}");
+                    content.AppendLine($"{++i}: {defectogram.Plate.MeltYear}-{defectogram.Plate.MeltNumber}-{defectogram.Plate.SlabNumber}-{platePart.Number}: {platePart.Evaluation?.Name}");
+                    content.AppendLine($"   Размер: {platePart.Width}x{platePart.Length}");
+                    content.AppendLine($"   X: {platePart.X}мм");
+                    content.AppendLine($"   Y: {platePart.Y}мм");
                 }
             }
-            
+
 
             entryDetails.Text = content.ToString();
+        }
+
+        private void entriesList_Resize(object sender, EventArgs e)
+        {
+            entriesList.Columns[entriesList.Columns.Count - 1].Width = -2;
         }
     }
 }
