@@ -32,11 +32,12 @@
             button1 = new Button();
             button2 = new Button();
             label1 = new Label();
+            errorLabel = new Label();
             SuspendLayout();
             // 
             // textBox1
             // 
-            textBox1.Location = new Point(43, 37);
+            textBox1.Location = new Point(43, 29);
             textBox1.Name = "textBox1";
             textBox1.Size = new Size(203, 23);
             textBox1.TabIndex = 0;
@@ -62,18 +63,27 @@
             // 
             // label1
             // 
-            label1.Location = new Point(40, 19);
+            label1.Location = new Point(40, 11);
             label1.Margin = new Padding(0);
             label1.Name = "label1";
             label1.Size = new Size(203, 15);
             label1.TabIndex = 3;
             label1.Text = "Пароль администратора";
             // 
+            // errorLabel
+            // 
+            errorLabel.ForeColor = Color.Red;
+            errorLabel.Location = new Point(40, 55);
+            errorLabel.Name = "errorLabel";
+            errorLabel.Size = new Size(206, 23);
+            errorLabel.TabIndex = 4;
+            // 
             // AdminAuthorization
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(285, 122);
+            Controls.Add(errorLabel);
             Controls.Add(label1);
             Controls.Add(button2);
             Controls.Add(button1);
@@ -92,5 +102,6 @@
         private Button button1;
         private Button button2;
         private Label label1;
+        private Label errorLabel;
     }
 }

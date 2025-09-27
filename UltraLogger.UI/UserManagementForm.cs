@@ -1,19 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using UltraLogger.Core.Application.Services;
 
 namespace UltraLogger.UI
 {
     public partial class UserManagementForm : Form
     {
-        public UserManagementForm()
+        private readonly AdministratorService _administratorService;
+        public UserManagementForm(AdministratorService administratorService)
         {
+            _administratorService = administratorService;
             InitializeComponent();
         }
     }

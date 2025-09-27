@@ -83,13 +83,13 @@
             // 
             // userManagementButton
             // 
-            userManagementButton.Enabled = false;
             userManagementButton.Location = new Point(12, 146);
             userManagementButton.Name = "userManagementButton";
             userManagementButton.Size = new Size(279, 23);
             userManagementButton.TabIndex = 6;
             userManagementButton.Text = "Управление пользователями...";
             userManagementButton.UseVisualStyleBackColor = true;
+            userManagementButton.Click += userManagementButton_Click;
             // 
             // errorLabel
             // 

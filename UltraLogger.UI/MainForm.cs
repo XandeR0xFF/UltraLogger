@@ -26,7 +26,7 @@ namespace UltraLogger.UI
             navigationMenu.Nodes["Orders"]!.Tag = new OrdersControl();
             navigationMenu.Nodes["Customers"]!.Tag = new CustomersControl();
 
-            
+
         }
 
         private void MainForm_Load(object sender, EventArgs e)
@@ -38,7 +38,7 @@ namespace UltraLogger.UI
         private void ShowAuthenticationView()
         {
             loginMenuItem.Visible = false;
-            AuthenticationForm form = new AuthenticationForm(_authenticationService);
+            AuthenticationForm form = new AuthenticationForm(_authenticationService, _administratorService);
             form.Owner = this;
             if (form.ShowDialog() == DialogResult.Cancel)
             {
@@ -70,6 +70,17 @@ namespace UltraLogger.UI
         private void changeAdminPasswordMenuItem_Click(object sender, EventArgs e)
         {
             ChangeAdminPasswordForm form = new ChangeAdminPasswordForm(_administratorService);
+            form.ShowDialog();
+        }
+
+        private void exitMenuItem_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+
+        private void userManagementMenuItem_Click(object sender, EventArgs e)
+        {
+            UserManagementForm form = new UserManagementForm(_administratorService);
             form.ShowDialog();
         }
     }
