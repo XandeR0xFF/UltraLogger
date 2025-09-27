@@ -45,5 +45,18 @@ namespace UltraLogger.Core.Application.Services
 
             return Result.Success();
         }
+
+        public IEnumerable<CustomerDTO> GetAll()
+        {
+            IEnumerable<Customer> customers = _customerRepository.GetAll();
+            List<CustomerDTO> customerDTOs = new List<CustomerDTO>();
+
+            foreach (Customer customer in customers)
+            {
+                customerDTOs.Add(new CustomerDTO { Id = customer.Id, CompanyName = customer.CompanyName, Description = customer.Description });
+            }
+
+            return customerDTOs;
+        }
     }
 }

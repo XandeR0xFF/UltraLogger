@@ -57,6 +57,6 @@ public class OrderRepository(UnitOfWork uow) : IOrderRepository
 
     public IEnumerable<Order> GetAll()
     {
-        return _uow.Query<Order>("SELECT * FROM Orders ORDER BY Number WHERE IsActive = TRUE");
+        return _uow.Query<Order>("SELECT * FROM Orders WHERE IsActive = TRUE ORDER BY Number");
     }
 }

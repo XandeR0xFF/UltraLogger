@@ -46,6 +46,6 @@ public class CustomerRepository(UnitOfWork uow) : ICustomerRepository
 
     public IEnumerable<Customer> GetAll()
     {
-        return _uow.Query<Customer>("SELECT * FROM Customers ORDER BY CompanyName");
+        return _uow.Query<Customer>("SELECT * FROM Customers WHERE IsActive = TRUE ORDER BY CompanyName");
     }
 }
