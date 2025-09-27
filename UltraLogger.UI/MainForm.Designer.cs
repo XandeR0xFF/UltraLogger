@@ -29,10 +29,10 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            TreeNode treeNode1 = new TreeNode("Журнал", 0, 0);
-            TreeNode treeNode2 = new TreeNode("Отчеты", 1, 1);
-            TreeNode treeNode3 = new TreeNode("Заказы", 4, 4);
-            TreeNode treeNode4 = new TreeNode("Заказчики", 2, 2);
+            TreeNode treeNode5 = new TreeNode("Журнал", 0, 0);
+            TreeNode treeNode6 = new TreeNode("Отчеты", 1, 1);
+            TreeNode treeNode7 = new TreeNode("Заказы", 4, 4);
+            TreeNode treeNode8 = new TreeNode("Заказчики", 2, 2);
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             statusStrip1 = new StatusStrip();
             menuStrip = new MenuStrip();
@@ -44,7 +44,7 @@
             выходToolStripMenuItem = new ToolStripMenuItem();
             toolStripMenuItem5 = new ToolStripMenuItem();
             управлениеПользователямиToolStripMenuItem = new ToolStripMenuItem();
-            toolStripMenuItem6 = new ToolStripMenuItem();
+            changeAdminPasswordMenuItem = new ToolStripMenuItem();
             navigationMenu = new TreeView();
             imageListNavigation = new ImageList(components);
             mainPanel = new Panel();
@@ -99,18 +99,18 @@
             // toolStripSeparator1
             // 
             toolStripSeparator1.Name = "toolStripSeparator1";
-            toolStripSeparator1.Size = new Size(177, 6);
+            toolStripSeparator1.Size = new Size(147, 6);
             // 
             // выходToolStripMenuItem
             // 
             выходToolStripMenuItem.Name = "выходToolStripMenuItem";
             выходToolStripMenuItem.ShortcutKeys = Keys.Alt | Keys.F4;
-            выходToolStripMenuItem.Size = new Size(180, 22);
+            выходToolStripMenuItem.Size = new Size(150, 22);
             выходToolStripMenuItem.Text = "Выход";
             // 
             // toolStripMenuItem5
             // 
-            toolStripMenuItem5.DropDownItems.AddRange(new ToolStripItem[] { управлениеПользователямиToolStripMenuItem, toolStripMenuItem6 });
+            toolStripMenuItem5.DropDownItems.AddRange(new ToolStripItem[] { управлениеПользователямиToolStripMenuItem, changeAdminPasswordMenuItem });
             toolStripMenuItem5.Name = "toolStripMenuItem5";
             toolStripMenuItem5.Size = new Size(134, 20);
             toolStripMenuItem5.Text = "Администрирование";
@@ -121,11 +121,12 @@
             управлениеПользователямиToolStripMenuItem.Size = new Size(274, 22);
             управлениеПользователямиToolStripMenuItem.Text = "Управление пользователями...";
             // 
-            // toolStripMenuItem6
+            // changeAdminPasswordMenuItem
             // 
-            toolStripMenuItem6.Name = "toolStripMenuItem6";
-            toolStripMenuItem6.Size = new Size(274, 22);
-            toolStripMenuItem6.Text = "Изменить пароль администратора...";
+            changeAdminPasswordMenuItem.Name = "changeAdminPasswordMenuItem";
+            changeAdminPasswordMenuItem.Size = new Size(274, 22);
+            changeAdminPasswordMenuItem.Text = "Изменить пароль администратора...";
+            changeAdminPasswordMenuItem.Click += changeAdminPasswordMenuItem_Click;
             // 
             // navigationMenu
             // 
@@ -137,23 +138,23 @@
             navigationMenu.ItemHeight = 28;
             navigationMenu.Location = new Point(0, 24);
             navigationMenu.Name = "navigationMenu";
-            treeNode1.ImageIndex = 0;
-            treeNode1.Name = "Log";
-            treeNode1.SelectedImageIndex = 0;
-            treeNode1.Text = "Журнал";
-            treeNode2.ImageIndex = 1;
-            treeNode2.Name = "Reports";
-            treeNode2.SelectedImageIndex = 1;
-            treeNode2.Text = "Отчеты";
-            treeNode3.ImageIndex = 4;
-            treeNode3.Name = "Orders";
-            treeNode3.SelectedImageIndex = 4;
-            treeNode3.Text = "Заказы";
-            treeNode4.ImageIndex = 2;
-            treeNode4.Name = "Customers";
-            treeNode4.SelectedImageIndex = 2;
-            treeNode4.Text = "Заказчики";
-            navigationMenu.Nodes.AddRange(new TreeNode[] { treeNode1, treeNode2, treeNode3, treeNode4 });
+            treeNode5.ImageIndex = 0;
+            treeNode5.Name = "Log";
+            treeNode5.SelectedImageIndex = 0;
+            treeNode5.Text = "Журнал";
+            treeNode6.ImageIndex = 1;
+            treeNode6.Name = "Reports";
+            treeNode6.SelectedImageIndex = 1;
+            treeNode6.Text = "Отчеты";
+            treeNode7.ImageIndex = 4;
+            treeNode7.Name = "Orders";
+            treeNode7.SelectedImageIndex = 4;
+            treeNode7.Text = "Заказы";
+            treeNode8.ImageIndex = 2;
+            treeNode8.Name = "Customers";
+            treeNode8.SelectedImageIndex = 2;
+            treeNode8.Text = "Заказчики";
+            navigationMenu.Nodes.AddRange(new TreeNode[] { treeNode5, treeNode6, treeNode7, treeNode8 });
             navigationMenu.SelectedImageIndex = 0;
             navigationMenu.ShowLines = false;
             navigationMenu.ShowPlusMinus = false;
@@ -214,7 +215,7 @@
         private ToolStripMenuItem выходToolStripMenuItem;
         private ToolStripMenuItem toolStripMenuItem5;
         private ToolStripMenuItem управлениеПользователямиToolStripMenuItem;
-        private ToolStripMenuItem toolStripMenuItem6;
+        private ToolStripMenuItem changeAdminPasswordMenuItem;
         private Panel mainPanel;
     }
 }

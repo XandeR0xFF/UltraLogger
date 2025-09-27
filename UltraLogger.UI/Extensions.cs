@@ -32,6 +32,7 @@ namespace UltraLogger.Core
             services.AddTransient<IEvaluationRepository, EvaluationRepository>();
             services.AddTransient<ICustomerRepository, CustomerRepository>();
             services.AddTransient<IOrderRepository, OrderRepository>();
+            services.AddTransient<IAdministratorPasswordManager, AdministratorPasswordManager>();
         }
 
         public static void AddApplicationServices(this IServiceCollection services)
@@ -41,6 +42,7 @@ namespace UltraLogger.Core
             services.AddTransient<CustomerService>();
             services.AddTransient<OrderService>();
             services.AddTransient<ReportService>();
+            services.AddTransient<AdministratorService>();
         }
 
         public static void AddUIServices(this IServiceCollection services)

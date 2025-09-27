@@ -28,36 +28,40 @@
         /// </summary>
         private void InitializeComponent()
         {
-            textBox1 = new TextBox();
-            textBox2 = new TextBox();
-            textBox3 = new TextBox();
+            oldPasswordTextBox = new TextBox();
+            newPasswordTextBox = new TextBox();
+            confirmPasswordTextBox = new TextBox();
             label1 = new Label();
-            button1 = new Button();
-            button2 = new Button();
+            okButton = new Button();
+            cancelButton = new Button();
             label2 = new Label();
             label3 = new Label();
+            errorLabel = new Label();
             SuspendLayout();
             // 
-            // textBox1
+            // oldPasswordTextBox
             // 
-            textBox1.Location = new Point(155, 20);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(179, 23);
-            textBox1.TabIndex = 0;
+            oldPasswordTextBox.Location = new Point(155, 20);
+            oldPasswordTextBox.Name = "oldPasswordTextBox";
+            oldPasswordTextBox.Size = new Size(179, 23);
+            oldPasswordTextBox.TabIndex = 0;
+            oldPasswordTextBox.UseSystemPasswordChar = true;
             // 
-            // textBox2
+            // newPasswordTextBox
             // 
-            textBox2.Location = new Point(155, 61);
-            textBox2.Name = "textBox2";
-            textBox2.Size = new Size(179, 23);
-            textBox2.TabIndex = 1;
+            newPasswordTextBox.Location = new Point(155, 61);
+            newPasswordTextBox.Name = "newPasswordTextBox";
+            newPasswordTextBox.Size = new Size(179, 23);
+            newPasswordTextBox.TabIndex = 1;
+            newPasswordTextBox.UseSystemPasswordChar = true;
             // 
-            // textBox3
+            // confirmPasswordTextBox
             // 
-            textBox3.Location = new Point(155, 90);
-            textBox3.Name = "textBox3";
-            textBox3.Size = new Size(179, 23);
-            textBox3.TabIndex = 2;
+            confirmPasswordTextBox.Location = new Point(155, 90);
+            confirmPasswordTextBox.Name = "confirmPasswordTextBox";
+            confirmPasswordTextBox.Size = new Size(179, 23);
+            confirmPasswordTextBox.TabIndex = 2;
+            confirmPasswordTextBox.UseSystemPasswordChar = true;
             // 
             // label1
             // 
@@ -68,23 +72,24 @@
             label1.TabIndex = 3;
             label1.Text = "Старый пароль";
             // 
-            // button1
+            // okButton
             // 
-            button1.Location = new Point(177, 147);
-            button1.Name = "button1";
-            button1.Size = new Size(75, 23);
-            button1.TabIndex = 4;
-            button1.Text = "Ок";
-            button1.UseVisualStyleBackColor = true;
+            okButton.Location = new Point(181, 147);
+            okButton.Name = "okButton";
+            okButton.Size = new Size(75, 23);
+            okButton.TabIndex = 4;
+            okButton.Text = "Ок";
+            okButton.UseVisualStyleBackColor = true;
+            okButton.Click += okButton_Click;
             // 
-            // button2
+            // cancelButton
             // 
-            button2.Location = new Point(258, 147);
-            button2.Name = "button2";
-            button2.Size = new Size(75, 23);
-            button2.TabIndex = 5;
-            button2.Text = "Отмена";
-            button2.UseVisualStyleBackColor = true;
+            cancelButton.Location = new Point(262, 147);
+            cancelButton.Name = "cancelButton";
+            cancelButton.Size = new Size(75, 23);
+            cancelButton.TabIndex = 5;
+            cancelButton.Text = "Отмена";
+            cancelButton.UseVisualStyleBackColor = true;
             // 
             // label2
             // 
@@ -104,23 +109,34 @@
             label3.TabIndex = 7;
             label3.Text = "Подтверждение пароля";
             // 
-            // ChangeAminPasswordForm
+            // errorLabel
             // 
+            errorLabel.ForeColor = Color.Red;
+            errorLabel.Location = new Point(12, 123);
+            errorLabel.Name = "errorLabel";
+            errorLabel.Size = new Size(322, 21);
+            errorLabel.TabIndex = 8;
+            // 
+            // ChangeAdminPasswordForm
+            // 
+            AcceptButton = okButton;
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(345, 182);
+            CancelButton = cancelButton;
+            ClientSize = new Size(349, 182);
+            Controls.Add(errorLabel);
             Controls.Add(label3);
             Controls.Add(label2);
-            Controls.Add(button2);
-            Controls.Add(button1);
+            Controls.Add(cancelButton);
+            Controls.Add(okButton);
             Controls.Add(label1);
-            Controls.Add(textBox3);
-            Controls.Add(textBox2);
-            Controls.Add(textBox1);
+            Controls.Add(confirmPasswordTextBox);
+            Controls.Add(newPasswordTextBox);
+            Controls.Add(oldPasswordTextBox);
             FormBorderStyle = FormBorderStyle.FixedDialog;
             MaximizeBox = false;
             MinimizeBox = false;
-            Name = "ChangeAminPasswordForm";
+            Name = "ChangeAdminPasswordForm";
             Text = "Изменение пароля администратора";
             ResumeLayout(false);
             PerformLayout();
@@ -128,13 +144,14 @@
 
         #endregion
 
-        private TextBox textBox1;
-        private TextBox textBox2;
-        private TextBox textBox3;
+        private TextBox oldPasswordTextBox;
+        private TextBox newPasswordTextBox;
+        private TextBox confirmPasswordTextBox;
         private Label label1;
-        private Button button1;
-        private Button button2;
+        private Button okButton;
+        private Button cancelButton;
         private Label label2;
         private Label label3;
+        private Label errorLabel;
     }
 }

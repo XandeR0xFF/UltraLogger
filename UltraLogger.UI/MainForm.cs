@@ -6,15 +6,18 @@ namespace UltraLogger.UI
     {
         private readonly AuthenticationService _authenticationService;
         private readonly DefectogramService _defectogramService;
+        private readonly AdministratorService _administratorService;
 
         private UserControl? _currentView;
 
         public MainForm(
             AuthenticationService authenticationService,
-            DefectogramService defectogramService)
+            DefectogramService defectogramService,
+            AdministratorService administratorService)
         {
             _authenticationService = authenticationService;
             _defectogramService = defectogramService;
+            _administratorService = administratorService;
 
             InitializeComponent();
 
@@ -22,7 +25,8 @@ namespace UltraLogger.UI
             navigationMenu.Nodes["Reports"]!.Tag = new ReportsControl();
             navigationMenu.Nodes["Orders"]!.Tag = new OrdersControl();
             navigationMenu.Nodes["Customers"]!.Tag = new CustomersControl();
-            _defectogramService = defectogramService;
+
+            
         }
 
         private void MainForm_Load(object sender, EventArgs e)
@@ -61,6 +65,12 @@ namespace UltraLogger.UI
             _currentView.Parent = mainPanel;
             _currentView.Dock = DockStyle.Fill;
             _currentView.Show();
+        }
+
+        private void changeAdminPasswordMenuItem_Click(object sender, EventArgs e)
+        {
+            ChangeAdminPasswordForm form = new ChangeAdminPasswordForm(_administratorService);
+            form.ShowDialog();
         }
     }
 }

@@ -26,7 +26,7 @@ public class DefectogramService(
 
     public Result CreateDefectogram(CreateDefectogramDTO createDefectogramDTO)
     {
-        Defectogram defectogramForAdd = new Defectogram(
+        Defectogram defectogramForCreate = new Defectogram(
             0,
             createDefectogramDTO.CreatedAt.Ticks,
             createDefectogramDTO.Name,
@@ -36,19 +36,19 @@ public class DefectogramService(
             createDefectogramDTO.Width,
             createDefectogramDTO.Length);
 
-        Defectogram addedDefectogram = _defectogramRepository.Add(defectogramForAdd);
+        Defectogram createdDefectogram = _defectogramRepository.Add(defectogramForCreate);
         _defectogramRepository.UnitOfWork.SaveChanges();
 
         PlateDTO? plateDTO = createDefectogramDTO.Plate;
-        Plate addedPlate = null;
+
         if (plateDTO != null)
         {
-            Plate plateForAdd = new Plate(0, addedDefectogram.Id, plateDTO.MeltYear, plateDTO.MeltNumber, plateDTO.SlabNumber);
+            Plate plateForAdd = new Plate(0, createdDefectogram.Id, plateDTO.MeltYear, plateDTO.MeltNumber, plateDTO.SlabNumber);
             foreach (PlatePartDTO platePartDTO in plateDTO.Parts)
             {
                 plateForAdd.AddPlatePart(platePartDTO.Number, platePartDTO.X, platePartDTO.Y, platePartDTO.Width, platePartDTO.Length);
             }
-            addedPlate = _plateRepository.Add(plateForAdd);
+            Plate addedPlate = _plateRepository.Add(plateForAdd);
             _plateRepository.UnitOfWork.SaveChanges();
 
             int i = 0;
@@ -179,7 +179,8 @@ public class DefectogramService(
         {
             MeltYear = plate.MeltYear,
             MeltNumber = plate.MeltNumber,
-            SlabNumber = plate.SlabNumber
+            SlabNumber = plate.SlabNumber,
+            ReportId = plate.ReportId
         };
 
         foreach (var part in plate.Parts)
