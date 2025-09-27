@@ -23,11 +23,12 @@ public class OrderRepository(UnitOfWork uow) : IOrderRepository
                 order.SteelGrade,
                 order.PlateThickness,
                 order.PlateWidth,
-                order.PlateLength);
+                order.PlateLength,
+                order.IsActive);
         }
 
-        _uow.Execute(@"INSERT INTO Orders(Id, Number, CustomerId, SteelGrade, PlateThickness, PlateLength, PlateWidth, PlateLength)
-                       VALUES(@Id, @Number, @CustomerId, @SteelGrade, @PlateThickness, @PlateLength, @PlateWidth, @PlateLength)", addedOrder);
+        _uow.Execute(@"INSERT INTO Orders(Id, Number, CustomerId, SteelGrade, PlateThickness, PlateLength, PlateWidth, PlateLength, IsActive)
+                       VALUES(@Id, @Number, @CustomerId, @SteelGrade, @PlateThickness, @PlateLength, @PlateWidth, @PlateLength, @IsActive)", addedOrder);
 
         return addedOrder;
     }
@@ -44,7 +45,8 @@ public class OrderRepository(UnitOfWork uow) : IOrderRepository
                         SteelGrade = @SteelGrade
                         PlateThickness = @PlateThickness,
                         PlateWidth = @PlateWidth,
-                        PlateLength = @PlateLength
+                        PlateLength = @PlateLength,
+                        IsActive = @IsActive
                      WHERE Id = @Id", order);
     }
 
@@ -55,6 +57,6 @@ public class OrderRepository(UnitOfWork uow) : IOrderRepository
 
     public IEnumerable<Order> GetAll()
     {
-        return _uow.Query<Order>("SELECT * FROM Orders ORDER BY Number");
+        return _uow.Query<Order>("SELECT * FROM Orders ORDER BY Number WHERE IsActive = TRUE");
     }
 }

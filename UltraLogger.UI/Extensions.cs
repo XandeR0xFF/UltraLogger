@@ -39,6 +39,7 @@ namespace UltraLogger.Core
             services.AddTransient<AuthenticationService>();
             services.AddTransient<DefectogramService>();
             services.AddTransient<CustomerService>();
+            services.AddTransient<OrderService>();
         }
 
         public static void AddUIServices(this IServiceCollection services)

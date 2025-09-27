@@ -10,7 +10,7 @@ public class Order : Entity, IAggregateRoot
         SteelGrade = string.Empty;
     }
 
-    public Order(long id, string number, long customerId, string steelGrade, int plateThickness, int plateWidth, int plateLength)
+    public Order(long id, string number, long customerId, string steelGrade, int plateThickness, int plateWidth, int plateLength, bool isActive)
     {
         Id = id;
         Number = number;
@@ -20,6 +20,7 @@ public class Order : Entity, IAggregateRoot
         PlateThickness = plateThickness;
         PlateWidth = plateWidth;
         PlateLength = plateLength;
+        IsActive = isActive;
     }
 
     public string Number { get; private set; }
@@ -28,6 +29,7 @@ public class Order : Entity, IAggregateRoot
     public int PlateThickness { get; private set; }
     public int PlateWidth { get; private set; }
     public int PlateLength { get; private set; }
+    public bool IsActive { get; private set; }
 
     public void ChangeDimensions(int thickness, int width, int length)
     {
@@ -46,4 +48,13 @@ public class Order : Entity, IAggregateRoot
         CustomerId = customerId;
     }
 
+    public void Disable()
+    {
+        IsActive = false;
+    }
+
+    public void Enable()
+    {
+        IsActive = true;
+    }
 }
