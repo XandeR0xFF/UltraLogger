@@ -17,5 +17,10 @@ namespace UltraLogger.Core.Domain.Aggregates.Reports
 
         public long CreatedAtTicks { get; private set; }
         public long OrderId { get; private set; }
+
+        public void ChangeOrder(long orderId)
+        {
+            OrderId = orderId;
+        }
     }
 }

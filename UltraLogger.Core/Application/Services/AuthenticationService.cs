@@ -27,18 +27,18 @@ namespace UltraLogger.Core.Application.Services
             return Result.Success();
         }
 
-        public Result<UserDTO> GetCurrentUser()
+        public Result<AuthenticatedUserDTO> GetCurrentUser()
         {
             User? user = _sessionManager.CurrentUser;
             if (user == null)
                 return AuthenticationServiceErrors.NoActiveSessions;
 
-            return MapUserToCurrentUserDTO(user);
+            return MapUserToAuthenticatedUserDTO(user);
         }
 
-        private UserDTO MapUserToCurrentUserDTO(User user)
+        private AuthenticatedUserDTO MapUserToAuthenticatedUserDTO(User user)
         {
-            return new UserDTO
+            return new AuthenticatedUserDTO
             {
                 Id = user.Id,
                 Login = user.Login,
