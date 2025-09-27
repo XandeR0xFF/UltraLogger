@@ -28,12 +28,16 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CustomersControl));
             toolStrip1 = new ToolStrip();
             listView1 = new ListView();
+            columnHeader1 = new ColumnHeader();
             splitContainer1 = new SplitContainer();
             label1 = new Label();
-            columnHeader1 = new ColumnHeader();
-            columnHeader2 = new ColumnHeader();
+            addButton = new ToolStripButton();
+            editButton = new ToolStripButton();
+            deleteButton = new ToolStripButton();
+            toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
             splitContainer1.Panel1.SuspendLayout();
             splitContainer1.Panel2.SuspendLayout();
@@ -42,6 +46,7 @@
             // 
             // toolStrip1
             // 
+            toolStrip1.Items.AddRange(new ToolStripItem[] { addButton, editButton, deleteButton });
             toolStrip1.Location = new Point(0, 0);
             toolStrip1.Name = "toolStrip1";
             toolStrip1.Size = new Size(591, 25);
@@ -50,7 +55,7 @@
             // 
             // listView1
             // 
-            listView1.Columns.AddRange(new ColumnHeader[] { columnHeader1, columnHeader2 });
+            listView1.Columns.AddRange(new ColumnHeader[] { columnHeader1 });
             listView1.Dock = DockStyle.Fill;
             listView1.Location = new Point(0, 0);
             listView1.Name = "listView1";
@@ -58,6 +63,11 @@
             listView1.TabIndex = 1;
             listView1.UseCompatibleStateImageBehavior = false;
             listView1.View = View.Details;
+            // 
+            // columnHeader1
+            // 
+            columnHeader1.Text = "Наименование";
+            columnHeader1.Width = 300;
             // 
             // splitContainer1
             // 
@@ -87,14 +97,32 @@
             label1.TabIndex = 0;
             label1.Text = "label1";
             // 
-            // columnHeader1
+            // addButton
             // 
-            columnHeader1.Text = "Наименование";
-            columnHeader1.Width = 300;
+            addButton.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            addButton.Image = (Image)resources.GetObject("addButton.Image");
+            addButton.ImageTransparentColor = Color.Magenta;
+            addButton.Name = "addButton";
+            addButton.Size = new Size(23, 22);
+            addButton.Text = "toolStripButton1";
             // 
-            // columnHeader2
+            // editButton
             // 
-            columnHeader2.Text = "Статус";
+            editButton.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            editButton.Image = (Image)resources.GetObject("editButton.Image");
+            editButton.ImageTransparentColor = Color.Magenta;
+            editButton.Name = "editButton";
+            editButton.Size = new Size(23, 22);
+            editButton.Text = "toolStripButton2";
+            // 
+            // deleteButton
+            // 
+            deleteButton.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            deleteButton.Image = (Image)resources.GetObject("deleteButton.Image");
+            deleteButton.ImageTransparentColor = Color.Magenta;
+            deleteButton.Name = "deleteButton";
+            deleteButton.Size = new Size(23, 22);
+            deleteButton.Text = "toolStripButton3";
             // 
             // CustomersControl
             // 
@@ -104,6 +132,8 @@
             Controls.Add(toolStrip1);
             Name = "CustomersControl";
             Size = new Size(591, 343);
+            toolStrip1.ResumeLayout(false);
+            toolStrip1.PerformLayout();
             splitContainer1.Panel1.ResumeLayout(false);
             splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)splitContainer1).EndInit();
@@ -117,8 +147,10 @@
         private ToolStrip toolStrip1;
         private ListView listView1;
         private ColumnHeader columnHeader1;
-        private ColumnHeader columnHeader2;
         private SplitContainer splitContainer1;
         private Label label1;
+        private ToolStripButton addButton;
+        private ToolStripButton editButton;
+        private ToolStripButton deleteButton;
     }
 }
