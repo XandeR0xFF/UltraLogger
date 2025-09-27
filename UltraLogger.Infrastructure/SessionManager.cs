@@ -6,6 +6,7 @@ namespace UltraLogger.Infrastructure
     public class SessionManager : ISessionManager
     {
         public User? CurrentUser { get; private set; }
+
         public void BeginSession(User user)
         {
             CurrentUser = user;

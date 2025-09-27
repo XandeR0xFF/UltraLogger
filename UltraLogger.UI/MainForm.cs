@@ -18,11 +18,10 @@ namespace UltraLogger.UI
 
             InitializeComponent();
 
-            navigationMenu.Nodes["Log"]!.Tag = new UTLogControl(_defectogramService);
+            navigationMenu.Nodes["Log"]!.Tag = new UTLogControl(_defectogramService, _authenticationService);
             navigationMenu.Nodes["Reports"]!.Tag = new ReportsControl();
             navigationMenu.Nodes["Orders"]!.Tag = new OrdersControl();
             navigationMenu.Nodes["Customers"]!.Tag = new CustomersControl();
-            navigationMenu.Nodes["Inspections"]!.Tag = new InspectionsControl();
             _defectogramService = defectogramService;
         }
 
@@ -46,7 +45,7 @@ namespace UltraLogger.UI
             var userResult = _authenticationService.GetCurrentUser();
             if (userResult.IsSuccess)
             {
-                loginMenuItem.Text = userResult.Value.Login;
+                loginMenuItem.Text = userResult.Value?.Login;
                 loginMenuItem.Visible = true;
             }
             else

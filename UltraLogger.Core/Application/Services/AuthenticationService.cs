@@ -40,7 +40,8 @@ namespace UltraLogger.Core.Application.Services
         {
             return new UserDTO
             {
-                Login = user.Login
+                Id = user.Id,
+                Login = user.Login,
             };
         }
     }

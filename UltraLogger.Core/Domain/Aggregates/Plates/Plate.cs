@@ -50,11 +50,15 @@ public class Plate : Entity, IAggregateRoot
         ReportId = null;
     }
 
-    public void AddPart(PlatePart part)
+    public void AddPlatePart(int number, int x, int y, int width, int length, long id = 0)
     {
-        if (GetPlatePartByNumber(part.Number) != null)
-            return;
-        _parts.Add(part);
+        PlatePart newPlatePart = new PlatePart(id, number, x, y, width, length, Id);
+        _parts.Add(newPlatePart);
+    }
+
+    public PlatePart? GetPlatePartById(long id)
+    {
+        return _parts.Find(p => Id == id);
     }
 
     public PlatePart? GetPlatePartByNumber(int platePartNumber)

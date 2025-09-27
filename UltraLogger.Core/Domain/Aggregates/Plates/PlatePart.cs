@@ -14,7 +14,8 @@ public class PlatePart : Entity
         int x,
         int y,
         int width,
-        int length)
+        int length,
+        long plateId)
     {
         Id = id;
         Number = number;
@@ -22,9 +23,11 @@ public class PlatePart : Entity
         Y = y;
         Width = width;
         Length = length;
+        PlateId = plateId;
     }
 
     public int Number { get; private set; }
+    public long PlateId { get; }
     public int X { get; private set; }
     public int Y { get; private set; }
     public int Width { get; private set; }

@@ -7,5 +7,6 @@ namespace UltraLogger.Core.Domain.Aggregates.Users
     {
         User? GetById(long id);
         User? GetByLogin(string login);
+        IEnumerable<User> GetAll();
     }
 }

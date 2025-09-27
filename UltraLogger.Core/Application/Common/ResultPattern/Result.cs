@@ -30,7 +30,7 @@ namespace UltraLogger.Core.Application.Common.ResultPattern
     public sealed class Result<TValue>
     {
         private readonly Result _result;
-        private readonly TValue _value;
+        private readonly TValue? _value;
 
         private Result(TValue value)
         {
@@ -46,7 +46,7 @@ namespace UltraLogger.Core.Application.Common.ResultPattern
 
         public bool IsSuccess => _result.IsSuccess;
         public bool IsFailure => _result.IsFailure;
-        public TValue Value => IsSuccess ? _value : throw new InvalidOperationException("Value can not be accessed when IsSuccess is false");
+        public TValue? Value => IsSuccess ? _value : throw new InvalidOperationException("Value can not be accessed when IsSuccess is false");
         public Error Error => _result.Error;
         public static implicit operator Result<TValue>(Error error) => new Result<TValue>(error);
         public static implicit operator Result<TValue>(TValue value) => new Result<TValue>(value);

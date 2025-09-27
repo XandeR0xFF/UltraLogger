@@ -33,7 +33,6 @@
             TreeNode treeNode2 = new TreeNode("Отчеты", 1, 1);
             TreeNode treeNode3 = new TreeNode("Заказы", 4, 4);
             TreeNode treeNode4 = new TreeNode("Заказчики", 2, 2);
-            TreeNode treeNode5 = new TreeNode("Инспекции", 3, 3);
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             statusStrip1 = new StatusStrip();
             menuStrip = new MenuStrip();
@@ -45,7 +44,6 @@
             выходToolStripMenuItem = new ToolStripMenuItem();
             toolStripMenuItem5 = new ToolStripMenuItem();
             управлениеПользователямиToolStripMenuItem = new ToolStripMenuItem();
-            справочныеТаблицыToolStripMenuItem = new ToolStripMenuItem();
             toolStripMenuItem6 = new ToolStripMenuItem();
             navigationMenu = new TreeView();
             imageListNavigation = new ImageList(components);
@@ -101,18 +99,18 @@
             // toolStripSeparator1
             // 
             toolStripSeparator1.Name = "toolStripSeparator1";
-            toolStripSeparator1.Size = new Size(147, 6);
+            toolStripSeparator1.Size = new Size(177, 6);
             // 
             // выходToolStripMenuItem
             // 
             выходToolStripMenuItem.Name = "выходToolStripMenuItem";
             выходToolStripMenuItem.ShortcutKeys = Keys.Alt | Keys.F4;
-            выходToolStripMenuItem.Size = new Size(150, 22);
+            выходToolStripMenuItem.Size = new Size(180, 22);
             выходToolStripMenuItem.Text = "Выход";
             // 
             // toolStripMenuItem5
             // 
-            toolStripMenuItem5.DropDownItems.AddRange(new ToolStripItem[] { управлениеПользователямиToolStripMenuItem, справочныеТаблицыToolStripMenuItem, toolStripMenuItem6 });
+            toolStripMenuItem5.DropDownItems.AddRange(new ToolStripItem[] { управлениеПользователямиToolStripMenuItem, toolStripMenuItem6 });
             toolStripMenuItem5.Name = "toolStripMenuItem5";
             toolStripMenuItem5.Size = new Size(134, 20);
             toolStripMenuItem5.Text = "Администрирование";
@@ -122,12 +120,6 @@
             управлениеПользователямиToolStripMenuItem.Name = "управлениеПользователямиToolStripMenuItem";
             управлениеПользователямиToolStripMenuItem.Size = new Size(274, 22);
             управлениеПользователямиToolStripMenuItem.Text = "Управление пользователями...";
-            // 
-            // справочныеТаблицыToolStripMenuItem
-            // 
-            справочныеТаблицыToolStripMenuItem.Name = "справочныеТаблицыToolStripMenuItem";
-            справочныеТаблицыToolStripMenuItem.Size = new Size(274, 22);
-            справочныеТаблицыToolStripMenuItem.Text = "Справочные таблицы...";
             // 
             // toolStripMenuItem6
             // 
@@ -161,11 +153,7 @@
             treeNode4.Name = "Customers";
             treeNode4.SelectedImageIndex = 2;
             treeNode4.Text = "Заказчики";
-            treeNode5.ImageIndex = 3;
-            treeNode5.Name = "Inspections";
-            treeNode5.SelectedImageIndex = 3;
-            treeNode5.Text = "Инспекции";
-            navigationMenu.Nodes.AddRange(new TreeNode[] { treeNode1, treeNode2, treeNode3, treeNode4, treeNode5 });
+            navigationMenu.Nodes.AddRange(new TreeNode[] { treeNode1, treeNode2, treeNode3, treeNode4 });
             navigationMenu.SelectedImageIndex = 0;
             navigationMenu.ShowLines = false;
             navigationMenu.ShowPlusMinus = false;
@@ -227,7 +215,6 @@
         private ToolStripMenuItem toolStripMenuItem5;
         private ToolStripMenuItem управлениеПользователямиToolStripMenuItem;
         private ToolStripMenuItem toolStripMenuItem6;
-        private ToolStripMenuItem справочныеТаблицыToolStripMenuItem;
         private Panel mainPanel;
     }
 }

@@ -1,8 +1,10 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using UltraLogger.Core.Application.Common;
 using UltraLogger.Core.Application.Services;
+using UltraLogger.Core.Domain.Aggregates.Customers;
 using UltraLogger.Core.Domain.Aggregates.Defectograms;
 using UltraLogger.Core.Domain.Aggregates.Evaluations;
+using UltraLogger.Core.Domain.Aggregates.Orders;
 using UltraLogger.Core.Domain.Aggregates.Plates;
 using UltraLogger.Core.Domain.Aggregates.Users;
 using UltraLogger.Core.Domain.Aggregates.USTModes;
@@ -28,6 +30,8 @@ namespace UltraLogger.Core
             services.AddTransient<IPlateRepository, PlateRepository>();
             services.AddTransient<IUTResultRepository, UTResultRepository>();
             services.AddTransient<IEvaluationRepository, EvaluationRepository>();
+            services.AddTransient<ICustomerRepository, CustomerRepository>();
+            services.AddTransient<IOrderRepository, OrderRepository>();
         }
 
         public static void AddApplicationServices(this IServiceCollection services)

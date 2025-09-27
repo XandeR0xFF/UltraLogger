@@ -28,7 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UTLogControl));
             toolStrip1 = new ToolStrip();
+            addButton = new ToolStripButton();
             splitContainer1 = new SplitContainer();
             entriesList = new ListView();
             defectogramColumn = new ColumnHeader();
@@ -37,6 +39,7 @@
             dimensionsColumn = new ColumnHeader();
             columnHeader5 = new ColumnHeader();
             entryDetails = new Label();
+            toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
             splitContainer1.Panel1.SuspendLayout();
             splitContainer1.Panel2.SuspendLayout();
@@ -45,11 +48,22 @@
             // 
             // toolStrip1
             // 
+            toolStrip1.Items.AddRange(new ToolStripItem[] { addButton });
             toolStrip1.Location = new Point(0, 0);
             toolStrip1.Name = "toolStrip1";
             toolStrip1.Size = new Size(765, 25);
             toolStrip1.TabIndex = 0;
             toolStrip1.Text = "toolStrip1";
+            // 
+            // addButton
+            // 
+            addButton.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            addButton.Image = (Image)resources.GetObject("addButton.Image");
+            addButton.ImageTransparentColor = Color.Magenta;
+            addButton.Name = "addButton";
+            addButton.Size = new Size(23, 22);
+            addButton.Text = "toolStripButton1";
+            addButton.Click += addButton_Click;
             // 
             // splitContainer1
             // 
@@ -128,6 +142,8 @@
             Name = "UTLogControl";
             Size = new Size(765, 366);
             Load += UTLogControl_Load;
+            toolStrip1.ResumeLayout(false);
+            toolStrip1.PerformLayout();
             splitContainer1.Panel1.ResumeLayout(false);
             splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)splitContainer1).EndInit();
@@ -147,5 +163,6 @@
         private ColumnHeader columnHeader5;
         private ColumnHeader ustModeColumn;
         private Label entryDetails;
+        private ToolStripButton addButton;
     }
 }

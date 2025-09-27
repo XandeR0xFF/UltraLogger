@@ -58,9 +58,9 @@
             // 
             label1.BorderStyle = BorderStyle.Fixed3D;
             label1.Dock = DockStyle.Right;
-            label1.Location = new Point(496, 25);
+            label1.Location = new Point(455, 25);
             label1.Name = "label1";
-            label1.Size = new Size(146, 447);
+            label1.Size = new Size(187, 447);
             label1.TabIndex = 4;
             label1.Text = "label1";
             // 
@@ -78,7 +78,7 @@
             // splitContainer1.Panel2
             // 
             splitContainer1.Panel2.Controls.Add(listView2);
-            splitContainer1.Size = new Size(496, 447);
+            splitContainer1.Size = new Size(455, 447);
             splitContainer1.SplitterDistance = 200;
             splitContainer1.TabIndex = 5;
             // 
@@ -88,7 +88,7 @@
             listView1.Dock = DockStyle.Fill;
             listView1.Location = new Point(0, 0);
             listView1.Name = "listView1";
-            listView1.Size = new Size(496, 200);
+            listView1.Size = new Size(455, 200);
             listView1.TabIndex = 0;
             listView1.UseCompatibleStateImageBehavior = false;
             listView1.View = View.Details;
@@ -104,8 +104,8 @@
             // 
             // columnHeader3
             // 
-            columnHeader3.Text = "Размер";
-            columnHeader3.Width = 100;
+            columnHeader3.Text = "Заказной размер ";
+            columnHeader3.Width = 120;
             // 
             // columnHeader4
             // 
@@ -118,7 +118,7 @@
             listView2.Dock = DockStyle.Fill;
             listView2.Location = new Point(0, 0);
             listView2.Name = "listView2";
-            listView2.Size = new Size(496, 243);
+            listView2.Size = new Size(455, 243);
             listView2.TabIndex = 0;
             listView2.UseCompatibleStateImageBehavior = false;
             listView2.View = View.Details;

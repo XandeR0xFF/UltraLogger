@@ -10,6 +10,11 @@ public class UserRepository(UnitOfWork uow) : IUserRepository
 
     public IUnitOfWork UnitOfWork => _uow;
 
+    public IEnumerable<User> GetAll()
+    {
+        return _uow.Query<User>("SELECT * FROM Users");
+    }
+
     public User? GetById(long id)
     {
         string sql = "SELECT * FROM Users WHERE Id = @Id";

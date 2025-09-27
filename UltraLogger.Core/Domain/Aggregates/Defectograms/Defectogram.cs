@@ -13,9 +13,10 @@ public class Defectogram : Entity, IAggregateRoot
         Name = string.Empty;
     }
 
-    public Defectogram(long id, string name, long ustModeId, long userId, int thickness, int width, int length)
+    public Defectogram(long id, long createdAtTicks, string name, long ustModeId, long userId, int thickness, int width, int length)
     {
         Id = id;
+        CreatedAtTicks = createdAtTicks;
         Name = name;
         Thickness = thickness;
         Width = width;

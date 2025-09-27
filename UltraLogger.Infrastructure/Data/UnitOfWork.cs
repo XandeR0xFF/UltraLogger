@@ -27,6 +27,21 @@ public class UnitOfWork : IUnitOfWork
         return _connection.Query<T>(sql, param, _transaction);
     }
 
+    public T? ExecuteScalar<T>(string sql, object? param = null)
+    {
+        return _connection.ExecuteScalar<T>(sql, param, _transaction);
+    }
+
+    public int Execute(string sql, object? param)
+    {
+        return _connection.Execute(sql, param, _transaction);
+    }
+
+    internal long GetNewId(string table)
+    {
+        return ExecuteScalar<long>($"SELECT MAX(Id) + 1 FROM {table}");
+    }
+
     public void SaveChanges()
     {
         if (_disposed)

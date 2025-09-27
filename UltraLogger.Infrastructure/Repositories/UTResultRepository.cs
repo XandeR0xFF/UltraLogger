@@ -1,4 +1,5 @@
-﻿using UltraLogger.Core.Domain.Aggregates.UTResults;
+﻿using UltraLogger.Core.Domain.Aggregates.Customers;
+using UltraLogger.Core.Domain.Aggregates.UTResults;
 using UltraLogger.Core.Domain.Common;
 using UltraLogger.Infrastructure.Data;
 
@@ -9,6 +10,22 @@ public class UTResultRepository(UnitOfWork uow) : IUTResultRepository
     private readonly UnitOfWork _uow = uow;
 
     public IUnitOfWork UnitOfWork => _uow;
+
+    public UTResult Add(UTResult utResult)
+    {
+        UTResult addedResult = utResult;
+
+        if (utResult.IsTransient())
+        {
+            long newId = _uow.GetNewId("UTResults");
+            addedResult = new UTResult(newId, utResult.CreatedAtTicks, utResult.PlatePartId, utResult.UserId, utResult.EvaluationId);
+        }
+
+        _uow.Execute(@"INSERT INTO UTResults(Id, CreatedAtTicks, PlatePartId, UserId, EvaluationId)
+                       VALUES(@Id, @CreatedAtTicks, @PlatePartId, @UserId, @EvaluationId)", addedResult);
+
+        return addedResult;
+    }
 
     public UTResult? GetLastResultByPlatePartId(long platePartId)
     {

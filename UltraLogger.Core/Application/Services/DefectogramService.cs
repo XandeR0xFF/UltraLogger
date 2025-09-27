@@ -1,4 +1,5 @@
-﻿using UltraLogger.Core.Application.DTOs;
+﻿using UltraLogger.Core.Application.Common.ResultPattern;
+using UltraLogger.Core.Application.DTOs;
 using UltraLogger.Core.Domain.Aggregates.Defectograms;
 using UltraLogger.Core.Domain.Aggregates.Evaluations;
 using UltraLogger.Core.Domain.Aggregates.Plates;
@@ -23,10 +24,91 @@ public class DefectogramService(
     private readonly IEvaluationRepository _evaluationRepository = evaluationRepository;
     private readonly IUTResultRepository _utResultRepository = utResultRepository;
 
+    public Result CreateDefectogram(CreateDefectogramDTO createDefectogramDTO)
+    {
+        Defectogram defectogramForAdd = new Defectogram(
+            0,
+            createDefectogramDTO.CreatedAt.Ticks,
+            createDefectogramDTO.Name,
+            createDefectogramDTO.UstModeId,
+            createDefectogramDTO.UserId,
+            (int)(createDefectogramDTO.Thickness * 100),
+            createDefectogramDTO.Width,
+            createDefectogramDTO.Length);
+
+        Defectogram addedDefectogram = _defectogramRepository.Add(defectogramForAdd);
+        _defectogramRepository.UnitOfWork.SaveChanges();
+
+        PlateDTO? plateDTO = createDefectogramDTO.Plate;
+        Plate addedPlate = null;
+        if (plateDTO != null)
+        {
+            Plate plateForAdd = new Plate(0, addedDefectogram.Id, plateDTO.MeltYear, plateDTO.MeltNumber, plateDTO.SlabNumber);
+            foreach (PlatePartDTO platePartDTO in plateDTO.Parts)
+            {
+                plateForAdd.AddPlatePart(platePartDTO.Number, platePartDTO.X, platePartDTO.Y, platePartDTO.Width, platePartDTO.Length);
+            }
+            addedPlate = _plateRepository.Add(plateForAdd);
+            _plateRepository.UnitOfWork.SaveChanges();
+
+            int i = 0;
+            foreach (PlatePart addedPart in addedPlate.Parts)
+            {
+                if (plateDTO.Parts[i].Evaluation != null)
+                {
+                    UTResult resultForAdd = new UTResult(0, createDefectogramDTO.CreatedAt.Ticks, addedPart.Id, createDefectogramDTO.UserId, plateDTO.Parts[i].Evaluation.Id);
+                    _utResultRepository.Add(resultForAdd);
+                }
+                i++;
+            }
+            _utResultRepository.UnitOfWork.SaveChanges();
+        }
+
+        return Result.Success();
+    }
+
+    public void UpdateDefectogram(DefectogramDTO updateDefectogramDTO)
+    {
+
+    }
+
+    public Result DeleteDefectogram(long id)
+    {
+        Defectogram? defectogramForDelete = _defectogramRepository.GetById(id);
+        if (defectogramForDelete == null)
+            return Result.Failure(DefectogramServiceErrors.DefectogramIdNotFound);
+
+        _defectogramRepository.Delete(defectogramForDelete);
+        _defectogramRepository.UnitOfWork.SaveChanges();
+        return Result.Success();
+    }
+
     public IEnumerable<DefectogramDTO> GetAll()
     {
         IEnumerable<Defectogram> defectograms = _defectogramRepository.GetAll();
         return defectograms.Select((d, dto) => MapDefectogramToDefectogramDTO(d));
+    }
+
+    public IEnumerable<USTModeDTO> GetUSTModes()
+    {
+        IEnumerable<USTMode> modes = _ustModeRepository.GetAll();
+        List<USTModeDTO> modesDTO = new List<USTModeDTO>();
+        foreach (USTMode mode in modes)
+        {
+            modesDTO.Add(MapUSTModeToUSTModeDTO(mode));
+        }
+        return modesDTO;
+    }
+
+    public IEnumerable<PlatePartEvaluationDTO> GetEvaluations()
+    {
+        IEnumerable<Evaluation> evaluations = _evaluationRepository.GetAll();
+        List<PlatePartEvaluationDTO> evaluattionDTOs = new List<PlatePartEvaluationDTO>();
+        foreach (Evaluation evaluation in evaluations)
+        {
+            evaluattionDTOs.Add(MapEvaluationToPlatePartEvaluationDTO(evaluation));
+        }
+        return evaluattionDTOs;
     }
 
     private PlateDTO? GetPlateForDefectogram(long defectogramId)
@@ -123,5 +205,10 @@ public class DefectogramService(
             X = platePart.X,
             Y = platePart.Y
         };
+    }
+
+    internal static class DefectogramServiceErrors
+    {
+        public static Error DefectogramIdNotFound = new Error(nameof(DefectogramIdNotFound), "ID дефектограммы не найден.");
     }
 }
