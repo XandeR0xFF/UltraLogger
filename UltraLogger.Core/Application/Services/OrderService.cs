@@ -15,7 +15,7 @@ public class OrderService(IOrderRepository orderRepository)
             createOrderDTO.Number,
             createOrderDTO.CustomerId,
             createOrderDTO.SteelGrade,
-            createOrderDTO.PlateThickness,
+            ((int)createOrderDTO.PlateThickness * 100),
             createOrderDTO.PlateWidth,
             createOrderDTO.PlateLength,
             true);
@@ -26,16 +26,18 @@ public class OrderService(IOrderRepository orderRepository)
         return Result.Success();
     }
 
-    public Result UpdateOrder(UpdateOrderDTO orderDTO)
+    public Result UpdateOrder(OrderDTO orderDTO)
     {
         Order? orderForUpdate = _orderRepository.GetById(orderDTO.Id);
         if (orderForUpdate == null)
             return Result.Failure(Error.None);
 
         orderForUpdate.ChangeCustomer(orderDTO.CustomerId);
-        orderForUpdate.ChangeDimensions(orderDTO.PlateThickness, orderDTO.PlateWidth, orderDTO.PlateLength);
+        orderForUpdate.ChangeDimensions(((int)orderDTO.PlateThickness * 100), orderDTO.PlateWidth, orderDTO.PlateLength);
         orderForUpdate.ChangeSteelGrade(orderDTO.SteelGrade);
+        orderForUpdate.ChangeNumber(orderDTO.Number);
 
+        _orderRepository.Update(orderForUpdate);
         _orderRepository.UnitOfWork.SaveChanges();
 
         return Result.Success();
@@ -67,7 +69,7 @@ public class OrderService(IOrderRepository orderRepository)
                 CustomerId = order.CustomerId,
                 Number = order.Number,
                 PlateLength = order.PlateLength,
-                PlateThickness = order.PlateThickness,
+                PlateThickness = order.PlateThickness / 100.0F,
                 PlateWidth = order.PlateWidth,
                 SteelGrade = order.SteelGrade
             });

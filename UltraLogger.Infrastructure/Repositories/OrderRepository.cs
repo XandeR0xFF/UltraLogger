@@ -42,7 +42,7 @@ public class OrderRepository(UnitOfWork uow) : IOrderRepository
                      SET
                         Number = @Number,
                         CustomerId = @CustomerId,
-                        SteelGrade = @SteelGrade
+                        SteelGrade = @SteelGrade,
                         PlateThickness = @PlateThickness,
                         PlateWidth = @PlateWidth,
                         PlateLength = @PlateLength,

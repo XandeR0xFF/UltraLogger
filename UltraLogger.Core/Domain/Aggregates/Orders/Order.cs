@@ -48,6 +48,11 @@ public class Order : Entity, IAggregateRoot
         CustomerId = customerId;
     }
 
+    public void ChangeNumber(string number)
+    {
+        Number = number;
+    }
+
     public void Disable()
     {
         IsActive = false;

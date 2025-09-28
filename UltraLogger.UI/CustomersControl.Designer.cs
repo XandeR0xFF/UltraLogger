@@ -94,6 +94,7 @@
             customersListView.UseCompatibleStateImageBehavior = false;
             customersListView.View = View.Details;
             customersListView.SelectedIndexChanged += customersListView_SelectedIndexChanged;
+            customersListView.Resize += customersListView_Resize;
             // 
             // columnHeader1
             // 

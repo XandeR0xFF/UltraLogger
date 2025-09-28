@@ -71,4 +71,9 @@ public partial class CustomersControl : UserControl
         if (_customerService.DeleteCustomer(idForDelete).IsSuccess)
             UpdateData();
     }
+
+    private void customersListView_Resize(object sender, EventArgs e)
+    {
+        customersListView.Columns[0].Width = customersListView.Width - 10;
+    }
 }
