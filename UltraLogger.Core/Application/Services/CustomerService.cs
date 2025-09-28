@@ -27,6 +27,7 @@ namespace UltraLogger.Core.Application.Services
             customerForUpdate.ChangeCompanyName(customerDTO.CompanyName);
             customerForUpdate.ChangeDescription(customerDTO.Description);
 
+            _customerRepository.Update(customerForUpdate);
             _customerRepository.UnitOfWork.SaveChanges();
 
             return Result.Success();

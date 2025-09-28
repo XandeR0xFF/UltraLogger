@@ -30,13 +30,13 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CustomersControl));
             toolStrip1 = new ToolStrip();
-            listView1 = new ListView();
-            columnHeader1 = new ColumnHeader();
-            splitContainer1 = new SplitContainer();
-            label1 = new Label();
             addButton = new ToolStripButton();
             editButton = new ToolStripButton();
             deleteButton = new ToolStripButton();
+            customersListView = new ListView();
+            columnHeader1 = new ColumnHeader();
+            splitContainer1 = new SplitContainer();
+            descriptionLabel = new Label();
             toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
             splitContainer1.Panel1.SuspendLayout();
@@ -53,16 +53,47 @@
             toolStrip1.TabIndex = 0;
             toolStrip1.Text = "toolStrip1";
             // 
-            // listView1
+            // addButton
             // 
-            listView1.Columns.AddRange(new ColumnHeader[] { columnHeader1 });
-            listView1.Dock = DockStyle.Fill;
-            listView1.Location = new Point(0, 0);
-            listView1.Name = "listView1";
-            listView1.Size = new Size(591, 229);
-            listView1.TabIndex = 1;
-            listView1.UseCompatibleStateImageBehavior = false;
-            listView1.View = View.Details;
+            addButton.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            addButton.Image = (Image)resources.GetObject("addButton.Image");
+            addButton.ImageTransparentColor = Color.Magenta;
+            addButton.Name = "addButton";
+            addButton.Size = new Size(23, 22);
+            addButton.Text = "toolStripButton1";
+            addButton.Click += addButton_Click;
+            // 
+            // editButton
+            // 
+            editButton.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            editButton.Image = (Image)resources.GetObject("editButton.Image");
+            editButton.ImageTransparentColor = Color.Magenta;
+            editButton.Name = "editButton";
+            editButton.Size = new Size(23, 22);
+            editButton.Text = "toolStripButton2";
+            editButton.Click += editButton_Click;
+            // 
+            // deleteButton
+            // 
+            deleteButton.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            deleteButton.Image = (Image)resources.GetObject("deleteButton.Image");
+            deleteButton.ImageTransparentColor = Color.Magenta;
+            deleteButton.Name = "deleteButton";
+            deleteButton.Size = new Size(23, 22);
+            deleteButton.Text = "toolStripButton3";
+            deleteButton.Click += deleteButton_Click;
+            // 
+            // customersListView
+            // 
+            customersListView.Columns.AddRange(new ColumnHeader[] { columnHeader1 });
+            customersListView.Dock = DockStyle.Fill;
+            customersListView.Location = new Point(0, 0);
+            customersListView.Name = "customersListView";
+            customersListView.Size = new Size(591, 229);
+            customersListView.TabIndex = 1;
+            customersListView.UseCompatibleStateImageBehavior = false;
+            customersListView.View = View.Details;
+            customersListView.SelectedIndexChanged += customersListView_SelectedIndexChanged;
             // 
             // columnHeader1
             // 
@@ -78,51 +109,24 @@
             // 
             // splitContainer1.Panel1
             // 
-            splitContainer1.Panel1.Controls.Add(listView1);
+            splitContainer1.Panel1.Controls.Add(customersListView);
             // 
             // splitContainer1.Panel2
             // 
-            splitContainer1.Panel2.Controls.Add(label1);
+            splitContainer1.Panel2.Controls.Add(descriptionLabel);
             splitContainer1.Size = new Size(591, 318);
             splitContainer1.SplitterDistance = 229;
             splitContainer1.TabIndex = 2;
             // 
-            // label1
+            // descriptionLabel
             // 
-            label1.BorderStyle = BorderStyle.Fixed3D;
-            label1.Dock = DockStyle.Fill;
-            label1.Location = new Point(0, 0);
-            label1.Name = "label1";
-            label1.Size = new Size(591, 85);
-            label1.TabIndex = 0;
-            label1.Text = "label1";
-            // 
-            // addButton
-            // 
-            addButton.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            addButton.Image = (Image)resources.GetObject("addButton.Image");
-            addButton.ImageTransparentColor = Color.Magenta;
-            addButton.Name = "addButton";
-            addButton.Size = new Size(23, 22);
-            addButton.Text = "toolStripButton1";
-            // 
-            // editButton
-            // 
-            editButton.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            editButton.Image = (Image)resources.GetObject("editButton.Image");
-            editButton.ImageTransparentColor = Color.Magenta;
-            editButton.Name = "editButton";
-            editButton.Size = new Size(23, 22);
-            editButton.Text = "toolStripButton2";
-            // 
-            // deleteButton
-            // 
-            deleteButton.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            deleteButton.Image = (Image)resources.GetObject("deleteButton.Image");
-            deleteButton.ImageTransparentColor = Color.Magenta;
-            deleteButton.Name = "deleteButton";
-            deleteButton.Size = new Size(23, 22);
-            deleteButton.Text = "toolStripButton3";
+            descriptionLabel.BorderStyle = BorderStyle.Fixed3D;
+            descriptionLabel.Dock = DockStyle.Fill;
+            descriptionLabel.Location = new Point(0, 0);
+            descriptionLabel.Name = "descriptionLabel";
+            descriptionLabel.Size = new Size(591, 85);
+            descriptionLabel.TabIndex = 0;
+            descriptionLabel.Text = "label1";
             // 
             // CustomersControl
             // 
@@ -132,6 +136,7 @@
             Controls.Add(toolStrip1);
             Name = "CustomersControl";
             Size = new Size(591, 343);
+            Load += CustomersControl_Load;
             toolStrip1.ResumeLayout(false);
             toolStrip1.PerformLayout();
             splitContainer1.Panel1.ResumeLayout(false);
@@ -145,10 +150,10 @@
         #endregion
 
         private ToolStrip toolStrip1;
-        private ListView listView1;
+        private ListView customersListView;
         private ColumnHeader columnHeader1;
         private SplitContainer splitContainer1;
-        private Label label1;
+        private Label descriptionLabel;
         private ToolStripButton addButton;
         private ToolStripButton editButton;
         private ToolStripButton deleteButton;
