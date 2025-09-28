@@ -47,6 +47,16 @@ namespace UltraLogger.Core.Application.Services
             return Result.Success();
         }
 
+        public Result<CustomerDTO> GetById(long id)
+        {
+            Customer? customer = _customerRepository.GetById(id);
+
+            if (customer == null)
+                return Error.None;
+
+            return MapCustomerToCustomerDTO(customer);
+        }
+
         public IEnumerable<CustomerDTO> GetAll()
         {
             IEnumerable<Customer> customers = _customerRepository.GetAll();
@@ -54,10 +64,15 @@ namespace UltraLogger.Core.Application.Services
 
             foreach (Customer customer in customers)
             {
-                customerDTOs.Add(new CustomerDTO { Id = customer.Id, CompanyName = customer.CompanyName, Description = customer.Description });
+                customerDTOs.Add(MapCustomerToCustomerDTO(customer));
             }
 
             return customerDTOs;
+        }
+
+        private CustomerDTO MapCustomerToCustomerDTO(Customer customer)
+        {
+            return new CustomerDTO { Id = customer.Id, CompanyName = customer.CompanyName, Description = customer.Description };
         }
     }
 }
