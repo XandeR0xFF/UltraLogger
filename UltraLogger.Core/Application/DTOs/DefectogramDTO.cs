@@ -10,6 +10,6 @@
         public int Length { get; set; }
         public USTModeDTO? UstMode { get; set; }
         public NDTSpecialistDTO? Creator { get; set; }
-        public PlateDTO? Plate { get; set; }
+        public DefectogramPlateDTO? Plate { get; set; }
     }
 }

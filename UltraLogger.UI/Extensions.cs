@@ -6,6 +6,7 @@ using UltraLogger.Core.Domain.Aggregates.Defectograms;
 using UltraLogger.Core.Domain.Aggregates.Evaluations;
 using UltraLogger.Core.Domain.Aggregates.Orders;
 using UltraLogger.Core.Domain.Aggregates.Plates;
+using UltraLogger.Core.Domain.Aggregates.Reports;
 using UltraLogger.Core.Domain.Aggregates.Users;
 using UltraLogger.Core.Domain.Aggregates.USTModes;
 using UltraLogger.Core.Domain.Aggregates.UTResults;
@@ -32,6 +33,7 @@ namespace UltraLogger.Core
             services.AddTransient<IEvaluationRepository, EvaluationRepository>();
             services.AddTransient<ICustomerRepository, CustomerRepository>();
             services.AddTransient<IOrderRepository, OrderRepository>();
+            services.AddTransient<IReportRepository, ReportRepository>();
             services.AddTransient<IAdministratorPasswordManager, AdministratorPasswordManager>();
         }
 
@@ -43,6 +45,7 @@ namespace UltraLogger.Core
             services.AddTransient<OrderService>();
             services.AddTransient<ReportService>();
             services.AddTransient<AdministratorService>();
+            services.AddTransient<PlateService>();
         }
 
         public static void AddUIServices(this IServiceCollection services)

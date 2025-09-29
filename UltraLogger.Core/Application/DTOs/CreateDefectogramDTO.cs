@@ -9,6 +9,6 @@
         public int Length { get; set; }
         public long UstModeId { get; set; }
         public long UserId { get; set; }
-        public PlateDTO? Plate { get; set; }
+        public DefectogramPlateDTO? Plate { get; set; }
     }
 }

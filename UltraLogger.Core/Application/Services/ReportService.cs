@@ -10,19 +10,28 @@ namespace UltraLogger.Core.Application.Services
 
         public Result CreateReport(CreateReportDTO createReportDTO)
         {
-            Report reportForCreate = new Report(0, DateTime.Now.Ticks, createReportDTO.OrderId);
+            Report reportForCreate = new Report(0, DateTime.Now.Ticks, createReportDTO.OrderId, true);
             _reportRepository.Add(reportForCreate);
             _reportRepository.UnitOfWork.SaveChanges();
             return Result.Success();
         }
 
-        public Result UpdateReport(UpdateReportDTO updateReportDTO)
+        public Result UpdateReport(ReportDTO reportDTO)
         {
-            Report? reportForUpdate = _reportRepository.GetById(updateReportDTO.Id);
+            Report? reportForUpdate = _reportRepository.GetById(reportDTO.Id);
             if (reportForUpdate == null)
                 return Error.None;
 
-            reportForUpdate.ChangeOrder(updateReportDTO.OrderId);
+            reportForUpdate.ChangeOrder(reportDTO.OrderId);
+            if (reportDTO.IsOpen)
+            {
+                reportForUpdate.Open();
+            }
+            else
+            {
+                reportForUpdate.Close();
+            }
+            _reportRepository.Update(reportForUpdate);
             _reportRepository.UnitOfWork.SaveChanges();
             return Result.Success();
         }
@@ -53,7 +62,7 @@ namespace UltraLogger.Core.Application.Services
             List<ReportDTO> reportDTOs = new List<ReportDTO>();
             foreach (Report report in reports)
             {
-                MapReportToReportDTO(report);
+                reportDTOs.Add(MapReportToReportDTO(report));
             }
             return reportDTOs;
         }
@@ -62,7 +71,7 @@ namespace UltraLogger.Core.Application.Services
         {
             return new ReportDTO
             {
-                Id = report.Id, CreatedAt = new DateTime(report.CreatedAtTicks), OrderId = report.OrderId
+                Id = report.Id, CreatedAt = new DateTime(report.CreatedAtTicks), OrderId = report.OrderId, IsOpen = report.IsOpen
             };
         }
     }

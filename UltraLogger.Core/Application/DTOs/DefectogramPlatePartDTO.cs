@@ -1,6 +1,6 @@
 ﻿namespace UltraLogger.Core.Application.DTOs;
 
-public class PlatePartDTO
+public class DefectogramPlatePartDTO
 {
     public long Id { get; set; }
     public int Number { get; set; }
@@ -8,5 +8,5 @@ public class PlatePartDTO
     public int Y { get; set; }
     public int Width { get; set; }
     public int Length { get; set; }
-    public InspectionResultDTO? InspectionResult { get; set; }
+    public EvaluationDTO? Evaluation { get; set; }
 }

@@ -17,7 +17,7 @@ namespace UltraLogger.UI
     {
         private readonly bool _createdMode;
 
-        private PlateDTO _plateDTO = new PlateDTO();
+        private DefectogramPlateDTO _plateDTO = new DefectogramPlateDTO();
 
         private bool _updatingPlatePartControls;
 
@@ -28,7 +28,7 @@ namespace UltraLogger.UI
         }
 
         public List<USTModeDTO> USTModes { get; } = new List<USTModeDTO>();
-        public List<PlatePartEvaluationDTO> Evaluations { get; } = new List<PlatePartEvaluationDTO>();
+        public List<EvaluationDTO> Evaluations { get; } = new List<EvaluationDTO>();
         public long CurentUserId { get; set; }
         public CreateDefectogramDTO? CreateDTO { get; private set; }
 
@@ -48,7 +48,7 @@ namespace UltraLogger.UI
                 ustModesComboBox.Items.Add(mode.Name);
             }
 
-            foreach (PlatePartEvaluationDTO evaluationDTO in Evaluations)
+            foreach (EvaluationDTO evaluationDTO in Evaluations)
             {
                 utEvaluationsComboBox.Items.Add(evaluationDTO.Name);
             }
@@ -118,7 +118,7 @@ namespace UltraLogger.UI
         private void UpdatePlateListViewContent()
         {
             platesListView.Items.Clear();
-            foreach (PlatePartDTO partDTO in _plateDTO.Parts)
+            foreach (DefectogramPlatePartDTO partDTO in _plateDTO.Parts)
             {
                 var item = platesListView.Items.Add(partDTO.Number.ToString());
                 item.Tag = partDTO;
@@ -132,7 +132,7 @@ namespace UltraLogger.UI
             _updatingPlatePartControls = true;
             if (platesListView.SelectedItems.Count > 0)
             {
-                PlatePartDTO seletedPartDTO = (PlatePartDTO)(platesListView.SelectedItems[0].Tag!);
+                DefectogramPlatePartDTO seletedPartDTO = (DefectogramPlatePartDTO)(platesListView.SelectedItems[0].Tag!);
 
                 platePartNumberTextBox.Text = seletedPartDTO.Number.ToString();
                 platePartNumberTextBox.Enabled = true;
@@ -184,7 +184,7 @@ namespace UltraLogger.UI
 
         private void addPlatePartButton_Click(object sender, EventArgs e)
         {
-            PlatePartDTO partForAdd = new PlatePartDTO() { Number = _plateDTO.Parts.Count + 1 };
+            DefectogramPlatePartDTO partForAdd = new DefectogramPlatePartDTO() { Number = _plateDTO.Parts.Count + 1 };
             _plateDTO.Parts.Add(partForAdd);
             UpdatePlateListViewContent();
             platesListView.SelectedIndices.Add(platesListView.Items.Count - 1);
@@ -202,7 +202,7 @@ namespace UltraLogger.UI
 
             if (platesListView.SelectedItems.Count > 0)
             {
-                PlatePartDTO seletedPartDTO = (PlatePartDTO)(platesListView.SelectedItems[0].Tag!);
+                DefectogramPlatePartDTO seletedPartDTO = (DefectogramPlatePartDTO)(platesListView.SelectedItems[0].Tag!);
 
                 int partNumber = default;
                 int partWidth = default;

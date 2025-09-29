@@ -1,9 +1,9 @@
 ﻿namespace UltraLogger.Core.Application.DTOs;
 
-public class ReportDTO
+public class InspectionResultDTO
 {
     public long Id { get; set; }
     public DateTime CreatedAt { get; set; }
-    public long OrderId { get; set; }
-    public bool IsOpen { get; set; }
+    public long UserId { get; set; }
+    public long EvaluationId { get; set; }
 }

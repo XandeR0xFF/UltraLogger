@@ -57,24 +57,38 @@ public class OrderService(IOrderRepository orderRepository)
         return Result.Success();
     }
 
+    public Result<OrderDTO> GetById(long orderId)
+    {
+        Order? order = _orderRepository.GetById(orderId);
+        if (order == null)
+            return Error.None;
+
+        return MapOrderToOrderDTO(order);
+    }
+
     public IEnumerable<OrderDTO> GetAll()
     {
         var orders = _orderRepository.GetAll();
         List<OrderDTO> orderDTOs = new List<OrderDTO>();
         foreach (var order in orders)
         {
-            orderDTOs.Add(new OrderDTO
-            {
-                Id = order.Id,
-                CustomerId = order.CustomerId,
-                Number = order.Number,
-                PlateLength = order.PlateLength,
-                PlateThickness = order.PlateThickness / 100.0F,
-                PlateWidth = order.PlateWidth,
-                SteelGrade = order.SteelGrade
-            });
+            orderDTOs.Add(MapOrderToOrderDTO(order));
         }
         return orderDTOs;
+    }
+
+    private OrderDTO MapOrderToOrderDTO(Order order)
+    {
+        return new OrderDTO()
+        {
+            Id = order.Id,
+            CustomerId = order.CustomerId,
+            Number = order.Number,
+            PlateLength = order.PlateLength,
+            PlateThickness = order.PlateThickness / 100.0F,
+            PlateWidth = order.PlateWidth,
+            SteelGrade = order.SteelGrade
+        };
     }
 }
 

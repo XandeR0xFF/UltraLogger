@@ -70,4 +70,9 @@ public class Plate : Entity, IAggregateRoot
     {
         _parts.Remove(part);
     }
+
+    public void RemoveAllPlateParts()
+    {
+        _parts.Clear();
+    }
 }

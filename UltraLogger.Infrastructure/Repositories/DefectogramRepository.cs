@@ -58,7 +58,7 @@ public class DefectogramRepository(UnitOfWork uow) : IDefectogramRepository
 
     public Defectogram? GetById(long id)
     {
-        return _uow.ExecuteScalar<Defectogram>("SELECT FROM Defectograms WHERE Id = @Id", new { Id = id });
+        return _uow.QuerySingleOrDefault<Defectogram>("SELECT * FROM Defectograms WHERE Id = @Id", new { Id = id });
     }
 
     public IEnumerable<Defectogram> GetAll()

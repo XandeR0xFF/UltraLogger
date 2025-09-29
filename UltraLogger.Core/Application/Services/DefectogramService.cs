@@ -39,12 +39,12 @@ public class DefectogramService(
         Defectogram createdDefectogram = _defectogramRepository.Add(defectogramForCreate);
         _defectogramRepository.UnitOfWork.SaveChanges();
 
-        PlateDTO? plateDTO = createDefectogramDTO.Plate;
+        DefectogramPlateDTO? plateDTO = createDefectogramDTO.Plate;
 
         if (plateDTO != null)
         {
             Plate plateForAdd = new Plate(0, createdDefectogram.Id, plateDTO.MeltYear, plateDTO.MeltNumber, plateDTO.SlabNumber);
-            foreach (PlatePartDTO platePartDTO in plateDTO.Parts)
+            foreach (DefectogramPlatePartDTO platePartDTO in plateDTO.Parts)
             {
                 plateForAdd.AddPlatePart(platePartDTO.Number, platePartDTO.X, platePartDTO.Y, platePartDTO.Width, platePartDTO.Length);
             }
@@ -83,6 +83,15 @@ public class DefectogramService(
         return Result.Success();
     }
 
+    public Result<DefectogramDTO> GetById(long defectogramId)
+    {
+        Defectogram? defectogram = _defectogramRepository.GetById(defectogramId);
+        if (defectogram == null)
+            return DefectogramServiceErrors.DefectogramIdNotFound;
+
+        return MapDefectogramToDefectogramDTO(defectogram);
+    }
+
     public IEnumerable<DefectogramDTO> GetAll()
     {
         IEnumerable<Defectogram> defectograms = _defectogramRepository.GetAll();
@@ -100,10 +109,10 @@ public class DefectogramService(
         return modesDTO;
     }
 
-    public IEnumerable<PlatePartEvaluationDTO> GetEvaluations()
+    public IEnumerable<EvaluationDTO> GetEvaluations()
     {
         IEnumerable<Evaluation> evaluations = _evaluationRepository.GetAll();
-        List<PlatePartEvaluationDTO> evaluattionDTOs = new List<PlatePartEvaluationDTO>();
+        List<EvaluationDTO> evaluattionDTOs = new List<EvaluationDTO>();
         foreach (Evaluation evaluation in evaluations)
         {
             evaluattionDTOs.Add(MapEvaluationToPlatePartEvaluationDTO(evaluation));
@@ -111,7 +120,7 @@ public class DefectogramService(
         return evaluattionDTOs;
     }
 
-    private PlateDTO? GetPlateForDefectogram(long defectogramId)
+    private DefectogramPlateDTO? GetPlateForDefectogram(long defectogramId)
     {
         Plate? plate = _plateRepository.GetByDefectogramId(defectogramId);
 
@@ -138,7 +147,7 @@ public class DefectogramService(
     private DefectogramDTO MapDefectogramToDefectogramDTO(Defectogram defectogram)
     {
         List<USTModeDTO> ustModes = new(_ustModeRepository.GetAll().Select(m => MapUSTModeToUSTModeDTO(m)));
-        List<PlatePartEvaluationDTO> evaluations = new(_evaluationRepository.GetAll().Select(e => MapEvaluationToPlatePartEvaluationDTO(e)));
+        List<EvaluationDTO> evaluations = new(_evaluationRepository.GetAll().Select(e => MapEvaluationToPlatePartEvaluationDTO(e)));
 
         DefectogramDTO defectogramDTO = new DefectogramDTO
         {
@@ -155,7 +164,7 @@ public class DefectogramService(
 
         if (defectogramDTO.Plate != null)
         {
-            foreach (PlatePartDTO platePartDTO in defectogramDTO.Plate.Parts)
+            foreach (DefectogramPlatePartDTO platePartDTO in defectogramDTO.Plate.Parts)
             {
                 UTResult? utResult = _utResultRepository.GetLastResultByPlatePartId(platePartDTO.Id);
                 if (utResult != null)
@@ -173,9 +182,9 @@ public class DefectogramService(
         return new USTModeDTO { Id = ustMode.Id, Name = ustMode.Name, Description = ustMode.Description };
     }
 
-    private PlateDTO MapPlateToPlateDTO(Plate plate)
+    private DefectogramPlateDTO MapPlateToPlateDTO(Plate plate)
     {
-        PlateDTO plateDTO = new PlateDTO()
+        DefectogramPlateDTO plateDTO = new DefectogramPlateDTO()
         {
             MeltYear = plate.MeltYear,
             MeltNumber = plate.MeltNumber,
@@ -191,14 +200,14 @@ public class DefectogramService(
         return plateDTO;
     }
 
-    private PlatePartEvaluationDTO MapEvaluationToPlatePartEvaluationDTO(Evaluation evaluation)
+    private EvaluationDTO MapEvaluationToPlatePartEvaluationDTO(Evaluation evaluation)
     {
-        return new PlatePartEvaluationDTO() { Id = evaluation.Id, Name = evaluation.Name };
+        return new EvaluationDTO() { Id = evaluation.Id, Name = evaluation.Name };
     }
 
-    private PlatePartDTO MapPlatePartToPlatePartDTO(PlatePart platePart)
+    private DefectogramPlatePartDTO MapPlatePartToPlatePartDTO(PlatePart platePart)
     {
-        return new PlatePartDTO() { 
+        return new DefectogramPlatePartDTO() { 
             Id = platePart.Id,
             Length = platePart.Length,
             Width = platePart.Width,

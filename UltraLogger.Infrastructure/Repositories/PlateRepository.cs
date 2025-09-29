@@ -43,7 +43,12 @@ namespace UltraLogger.Infrastructure.Repositories
                             ReportId = @ReportId
                          WHERE Id = @Id", plate);
 
-            UpdatePlateParts(plate);
+            _uow.Execute("DELETE FROM PlateParts WHERE PlateId = @PlateId", new { PlateId = plate.Id });
+
+            foreach (PlatePart part in plate.Parts)
+            {
+                AddPlatePart(plate.Id, part);
+            }
         }
 
         public void Delete(Plate plate)
@@ -92,60 +97,18 @@ namespace UltraLogger.Infrastructure.Repositories
 
         private PlatePart AddPlatePart(long plateId, PlatePart platePart)
         {
-            long newPartId = _uow.GetNewId("PlateParts");
-            PlatePart addedPlatePart = new PlatePart(newPartId, platePart.Number, platePart.X, platePart.Y, platePart.Width, platePart.Length, plateId);
+            PlatePart platePartForInsert = platePart;
+
+            if (platePart.IsTransient())
+            {
+                long newPartId = _uow.GetNewId("PlateParts");
+                platePartForInsert = new PlatePart(newPartId, platePart.Number, platePart.X, platePart.Y, platePart.Width, platePart.Length, plateId);
+            }
+
+
             _uow.Execute(@"INSERT INTO PlateParts(Id, Number, X, Y, Width, Length, PlateId)
-                         VALUES(@Id, @Number, @X, @Y, @Width, @Length, @PlateId)", addedPlatePart);
-            return addedPlatePart;
-        }
-
-        private void UpdatePlateParts(Plate plate)
-        {
-            IEnumerable<PlatePart> partsPersist = _uow.Query<PlatePart>("SELECT * FROM PlateParts WHERE PlsteId = @PlateId", new {PlateId = plate.Id});
-
-            foreach (var partPersist in partsPersist)
-            {
-                if (plate.GetPlatePartById(partPersist.Id) == null)
-                    DeletePlatePart(partPersist);
-            }
-
-            List<PlatePart> transientPlateParts = new List<PlatePart>();
-            foreach (var part in plate.Parts)
-            {
-                if (part.IsTransient())
-                {
-                    transientPlateParts.Add(part);
-                    PlatePart addedPlatePart = AddPlatePart(plate.Id, part);
-                    plate.AddPlatePart(addedPlatePart.Number, addedPlatePart.X, addedPlatePart.Y, addedPlatePart.Width, addedPlatePart.Length, addedPlatePart.Id);
-                }
-                else
-                {
-                    UpdatePlatePart(part);
-                }
-            }
-
-            foreach (var transientPlatePart in transientPlateParts)
-            {
-                plate.RemovePlatePart(transientPlatePart);
-            }
-        }
-
-        private void DeletePlatePart(PlatePart platePart)
-        {
-            _uow.Execute("DELETE FROM PlateParts WHERE Id = @Id", platePart);
-        }
-
-        private void UpdatePlatePart(PlatePart platePart)
-        {
-            _uow.Execute(@"UPDATE PlateParts
-                         SET
-                            Number = @Number,
-                            X = @X,
-                            Y = @Y,
-                            Width = @Width,
-                            Length = @Length,
-                            PlateId = @PlateId
-                         WHERE Id = @Id", platePart);
+                         VALUES(@Id, @Number, @X, @Y, @Width, @Length, @PlateId)", platePartForInsert);
+            return platePartForInsert;
         }
     }
 }

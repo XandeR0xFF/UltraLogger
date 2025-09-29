@@ -4,5 +4,5 @@ public class UTResultDTO
 {
     public DateTime CreatedAt { get; set; }
     public NDTSpecialistDTO? NDTSpecialist { get; set; }
-    public PlatePartEvaluationDTO? Evaluation { get; set; }
+    public EvaluationDTO? Evaluation { get; set; }
 }
