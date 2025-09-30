@@ -43,7 +43,7 @@ namespace UltraLogger.Infrastructure.Repositories
                             ReportId = @ReportId
                          WHERE Id = @Id", plate);
 
-            _uow.Execute("DELETE FROM PlateParts WHERE PlateId = @PlateId", new { PlateId = plate.Id });
+            //_uow.Execute("DELETE FROM PlateParts WHERE PlateId = @PlateId", new { PlateId = plate.Id });
 
             foreach (PlatePart part in plate.Parts)
             {
@@ -103,11 +103,22 @@ namespace UltraLogger.Infrastructure.Repositories
             {
                 long newPartId = _uow.GetNewId("PlateParts");
                 platePartForInsert = new PlatePart(newPartId, platePart.Number, platePart.X, platePart.Y, platePart.Width, platePart.Length, plateId);
-            }
-
-
-            _uow.Execute(@"INSERT INTO PlateParts(Id, Number, X, Y, Width, Length, PlateId)
+                _uow.Execute(@"INSERT INTO PlateParts(Id, Number, X, Y, Width, Length, PlateId)
                          VALUES(@Id, @Number, @X, @Y, @Width, @Length, @PlateId)", platePartForInsert);
+            }
+            else
+            {
+                _uow.Execute(@" UPDATE PlateParts 
+                                SET
+                                    Id = @Id,
+                                    Number = @Number,
+                                    X = @X,
+                                    Y = @Y,
+                                    Width = @Width,
+                                    Length = @Length
+                                WHERE Id = @Id
+                         ", platePartForInsert);
+            }
             return platePartForInsert;
         }
     }

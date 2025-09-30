@@ -11,6 +11,7 @@ namespace UltraLogger.UI
         private readonly OrderService _orderService;
         private readonly ReportService _reportService;
         private readonly PlateService _plateService;
+        private readonly UserService _userService;
 
         private UserControl? _currentView;
 
@@ -21,7 +22,8 @@ namespace UltraLogger.UI
             CustomerService customerService,
             OrderService orderService,
             ReportService reportService,
-            PlateService plateService)
+            PlateService plateService,
+            UserService userService)
         {
             _authenticationService = authenticationService;
             _defectogramService = defectogramService;
@@ -30,10 +32,11 @@ namespace UltraLogger.UI
             _orderService = orderService;
             _reportService = reportService;
             _plateService = plateService;
+            _userService = userService;
 
             InitializeComponent();
 
-            navigationMenu.Nodes["Log"]!.Tag = new UTLogControl(_defectogramService, _authenticationService);
+            navigationMenu.Nodes["Log"]!.Tag = new UTLogControl(defectogramService, _authenticationService, _plateService, _userService, _reportService, _orderService, _customerService);
             navigationMenu.Nodes["Reports"]!.Tag = new ReportsControl(_reportService, _orderService, _customerService, _defectogramService, _plateService);
             navigationMenu.Nodes["Orders"]!.Tag = new OrdersControl(_orderService, _customerService);
             navigationMenu.Nodes["Customers"]!.Tag = new CustomersControl(_customerService);

@@ -31,6 +31,10 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UTLogControl));
             toolStrip1 = new ToolStrip();
             addButton = new ToolStripButton();
+            deleteButton = new ToolStripButton();
+            toolStripSeparator1 = new ToolStripSeparator();
+            addToReport = new ToolStripButton();
+            removeFromReport = new ToolStripButton();
             splitContainer1 = new SplitContainer();
             entriesList = new ListView();
             defectogramColumn = new ColumnHeader();
@@ -48,7 +52,7 @@
             // 
             // toolStrip1
             // 
-            toolStrip1.Items.AddRange(new ToolStripItem[] { addButton });
+            toolStrip1.Items.AddRange(new ToolStripItem[] { addButton, deleteButton, toolStripSeparator1, addToReport, removeFromReport });
             toolStrip1.Location = new Point(0, 0);
             toolStrip1.Name = "toolStrip1";
             toolStrip1.Size = new Size(765, 25);
@@ -64,6 +68,41 @@
             addButton.Size = new Size(23, 22);
             addButton.Text = "toolStripButton1";
             addButton.Click += addButton_Click;
+            // 
+            // deleteButton
+            // 
+            deleteButton.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            deleteButton.Image = (Image)resources.GetObject("deleteButton.Image");
+            deleteButton.ImageTransparentColor = Color.Magenta;
+            deleteButton.Name = "deleteButton";
+            deleteButton.Size = new Size(23, 22);
+            deleteButton.Text = "toolStripButton2";
+            deleteButton.Click += deleteButton_Click;
+            // 
+            // toolStripSeparator1
+            // 
+            toolStripSeparator1.Name = "toolStripSeparator1";
+            toolStripSeparator1.Size = new Size(6, 25);
+            // 
+            // addToReport
+            // 
+            addToReport.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            addToReport.Image = (Image)resources.GetObject("addToReport.Image");
+            addToReport.ImageTransparentColor = Color.Magenta;
+            addToReport.Name = "addToReport";
+            addToReport.Size = new Size(23, 22);
+            addToReport.Text = "Добавить в отчет";
+            addToReport.Click += addToReport_Click;
+            // 
+            // removeFromReport
+            // 
+            removeFromReport.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            removeFromReport.Image = (Image)resources.GetObject("removeFromReport.Image");
+            removeFromReport.ImageTransparentColor = Color.Magenta;
+            removeFromReport.Name = "removeFromReport";
+            removeFromReport.Size = new Size(23, 22);
+            removeFromReport.Text = "Удалить из отчета";
+            removeFromReport.Click += removeFromReport_Click;
             // 
             // splitContainer1
             // 
@@ -164,5 +203,9 @@
         private ColumnHeader ustModeColumn;
         private Label entryDetails;
         private ToolStripButton addButton;
+        private ToolStripButton deleteButton;
+        private ToolStripSeparator toolStripSeparator1;
+        private ToolStripButton addToReport;
+        private ToolStripButton removeFromReport;
     }
 }

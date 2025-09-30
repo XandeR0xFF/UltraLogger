@@ -53,4 +53,9 @@ public class ReportRepository(UnitOfWork uow) : IReportRepository
     {
         return _uow.Query<Report>("SELECT * FROM Reports ORDER BY CreatedAtTicks");
     }
+
+    public IEnumerable<Report> GetByOpenState(bool isOpen)
+    {
+        return _uow.Query<Report>("SELECT * FROM Reports WHERE IsOpen = @IsOpen ORDER BY CreatedAtTicks", new {IsOpen = isOpen});
+    }
 }

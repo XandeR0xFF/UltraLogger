@@ -9,4 +9,5 @@ public interface IReportRepository : IRepository<Report>
     void Delete(Report report);
     Report? GetById(long id);
     IEnumerable<Report> GetAll();
+    IEnumerable<Report> GetByOpenState(bool isOpen);
 }

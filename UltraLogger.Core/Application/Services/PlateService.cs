@@ -13,6 +13,36 @@ public class PlateService(IPlateRepository plateRepository, IUTResultRepository 
     private readonly IEvaluationRepository _evaluationRepository = evaluationRepository;
 
 
+    public Result CreatePlate(CreatePlateDTO createPlateDTO)
+    {
+        Plate plateForInsert = new Plate(0,
+            createPlateDTO.DefectogramId,
+            createPlateDTO.MeltYear,
+            createPlateDTO.MeltNumber,
+            createPlateDTO.SlabNumber);
+
+        foreach (PlatePartDTO platePartDTO in createPlateDTO.Parts)
+        {
+            plateForInsert.AddPlatePart(platePartDTO.Number, platePartDTO.X, platePartDTO.Y, platePartDTO.Width, platePartDTO.Length);
+        }
+        Plate insertedPlate = _plateRepository.Add(plateForInsert);
+        _plateRepository.UnitOfWork.SaveChanges();
+
+        List<PlatePart> parts = [.. insertedPlate.Parts];
+        
+        for (int i = 0; i < createPlateDTO.Parts.Count; i++)
+        {
+            InspectionResultDTO? resultDTO = createPlateDTO.Parts[i].InspectionResult;
+            if (resultDTO != null)
+            {
+                UTResult utResult = new UTResult(0, resultDTO.CreatedAt.Ticks, parts[i].Id, resultDTO.UserId, resultDTO.EvaluationId);
+                _resultRepository.Add(utResult);
+            }
+            _resultRepository.UnitOfWork.SaveChanges();
+        }
+        return Result.Success();
+    }
+
     public Result UpdatePlate(PlateDTO plateDTO)
     {
         Plate? plateForUpdate = _plateRepository.GetById(plateDTO.Id);
@@ -60,6 +90,12 @@ public class PlateService(IPlateRepository plateRepository, IUTResultRepository 
         }
 
         return plateDTOs;
+    }
+
+    public Result<PlateDTO?> GetForDefectogram(long defectogramId)
+    {
+        Plate? plate = _plateRepository.GetByDefectogramId(defectogramId);
+        return plate == null ? null : MapPlateToPlateDTO(plate);
     }
 
     public IEnumerable<EvaluationDTO> GetEvaluations()

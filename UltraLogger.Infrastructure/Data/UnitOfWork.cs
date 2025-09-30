@@ -39,7 +39,7 @@ public class UnitOfWork : IUnitOfWork
 
     internal long GetNewId(string table)
     {
-        return ExecuteScalar<long>($"SELECT MAX(Id) + 1 FROM {table}");
+        return ExecuteScalar<long>($"SELECT coalesce(MAX(Id), 0) + 1 FROM {table}");
     }
 
     public void SaveChanges()

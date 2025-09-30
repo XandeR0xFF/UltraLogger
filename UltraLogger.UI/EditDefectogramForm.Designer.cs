@@ -36,16 +36,16 @@
             label3 = new Label();
             label4 = new Label();
             thicknessTextBox = new TextBox();
-            plateLengthTextBox = new TextBox();
+            platePartLengthTextBox = new TextBox();
             label5 = new Label();
-            plateWidthTextBox = new TextBox();
+            platePartWidthTextBox = new TextBox();
             label6 = new Label();
             ustModesComboBox = new ComboBox();
             label7 = new Label();
             plateDataCheckBox = new CheckBox();
             buttonOk = new Button();
             buttonCancel = new Button();
-            platesListView = new ListView();
+            platePartsListView = new ListView();
             columnHeader1 = new ColumnHeader();
             columnHeader2 = new ColumnHeader();
             columnHeader3 = new ColumnHeader();
@@ -57,16 +57,16 @@
             lengthTextBox = new TextBox();
             label11 = new Label();
             label12 = new Label();
-            plateXTextBox = new TextBox();
+            platePartXTextBox = new TextBox();
             label13 = new Label();
-            plateYTextBox = new TextBox();
+            platePartYTextBox = new TextBox();
             label14 = new Label();
             label15 = new Label();
             meltYearTextBox = new TextBox();
             meltNumberTextBox = new TextBox();
             slabNuberTextBox = new TextBox();
             label16 = new Label();
-            utEvaluationsComboBox = new ComboBox();
+            evaluationsComboBox = new ComboBox();
             addPlatePartButton = new Button();
             deletePlatePartButon = new Button();
             label17 = new Label();
@@ -133,13 +133,13 @@
             thicknessTextBox.Size = new Size(54, 23);
             thicknessTextBox.TabIndex = 6;
             // 
-            // plateLengthTextBox
+            // platePartLengthTextBox
             // 
-            plateLengthTextBox.Location = new Point(539, 241);
-            plateLengthTextBox.Name = "plateLengthTextBox";
-            plateLengthTextBox.Size = new Size(83, 23);
-            plateLengthTextBox.TabIndex = 8;
-            plateLengthTextBox.TextChanged += OnPlatePartsControlValueChanged;
+            platePartLengthTextBox.Location = new Point(539, 241);
+            platePartLengthTextBox.Name = "platePartLengthTextBox";
+            platePartLengthTextBox.Size = new Size(83, 23);
+            platePartLengthTextBox.TabIndex = 8;
+            platePartLengthTextBox.TextChanged += platePartsControlsChangeValue;
             // 
             // label5
             // 
@@ -150,13 +150,13 @@
             label5.TabIndex = 7;
             label5.Text = "Длина";
             // 
-            // plateWidthTextBox
+            // platePartWidthTextBox
             // 
-            plateWidthTextBox.Location = new Point(462, 241);
-            plateWidthTextBox.Name = "plateWidthTextBox";
-            plateWidthTextBox.Size = new Size(71, 23);
-            plateWidthTextBox.TabIndex = 10;
-            plateWidthTextBox.TextChanged += OnPlatePartsControlValueChanged;
+            platePartWidthTextBox.Location = new Point(462, 241);
+            platePartWidthTextBox.Name = "platePartWidthTextBox";
+            platePartWidthTextBox.Size = new Size(71, 23);
+            platePartWidthTextBox.TabIndex = 10;
+            platePartWidthTextBox.TextChanged += platePartsControlsChangeValue;
             // 
             // label6
             // 
@@ -215,18 +215,18 @@
             buttonCancel.Text = "Отмена";
             buttonCancel.UseVisualStyleBackColor = true;
             // 
-            // platesListView
+            // platePartsListView
             // 
-            platesListView.Columns.AddRange(new ColumnHeader[] { columnHeader1, columnHeader2, columnHeader3 });
-            platesListView.FullRowSelect = true;
-            platesListView.Location = new Point(10, 197);
-            platesListView.MultiSelect = false;
-            platesListView.Name = "platesListView";
-            platesListView.Size = new Size(335, 148);
-            platesListView.TabIndex = 16;
-            platesListView.UseCompatibleStateImageBehavior = false;
-            platesListView.View = View.Details;
-            platesListView.ItemSelectionChanged += platesListView_ItemSelectionChanged;
+            platePartsListView.Columns.AddRange(new ColumnHeader[] { columnHeader1, columnHeader2, columnHeader3 });
+            platePartsListView.FullRowSelect = true;
+            platePartsListView.Location = new Point(10, 197);
+            platePartsListView.MultiSelect = false;
+            platePartsListView.Name = "platePartsListView";
+            platePartsListView.Size = new Size(335, 148);
+            platePartsListView.TabIndex = 16;
+            platePartsListView.UseCompatibleStateImageBehavior = false;
+            platePartsListView.View = View.Details;
+            platePartsListView.SelectedIndexChanged += platePartsListView_SelectedIndexChanged;
             // 
             // columnHeader1
             // 
@@ -257,7 +257,7 @@
             platePartNumberTextBox.Name = "platePartNumberTextBox";
             platePartNumberTextBox.Size = new Size(162, 23);
             platePartNumberTextBox.TabIndex = 18;
-            platePartNumberTextBox.TextChanged += OnPlatePartsControlValueChanged;
+            platePartNumberTextBox.TextChanged += platePartsControlsChangeValue;
             // 
             // label9
             // 
@@ -309,13 +309,13 @@
             label12.TabIndex = 24;
             label12.Text = "Точка отсчета";
             // 
-            // plateXTextBox
+            // platePartXTextBox
             // 
-            plateXTextBox.Location = new Point(460, 286);
-            plateXTextBox.Name = "plateXTextBox";
-            plateXTextBox.Size = new Size(71, 23);
-            plateXTextBox.TabIndex = 28;
-            plateXTextBox.TextChanged += OnPlatePartsControlValueChanged;
+            platePartXTextBox.Location = new Point(460, 286);
+            platePartXTextBox.Name = "platePartXTextBox";
+            platePartXTextBox.Size = new Size(71, 23);
+            platePartXTextBox.TabIndex = 28;
+            platePartXTextBox.TextChanged += platePartsControlsChangeValue;
             // 
             // label13
             // 
@@ -326,13 +326,13 @@
             label13.TabIndex = 27;
             label13.Text = "X";
             // 
-            // plateYTextBox
+            // platePartYTextBox
             // 
-            plateYTextBox.Location = new Point(547, 286);
-            plateYTextBox.Name = "plateYTextBox";
-            plateYTextBox.Size = new Size(75, 23);
-            plateYTextBox.TabIndex = 26;
-            plateYTextBox.TextChanged += OnPlatePartsControlValueChanged;
+            platePartYTextBox.Location = new Point(547, 286);
+            platePartYTextBox.Name = "platePartYTextBox";
+            platePartYTextBox.Size = new Size(75, 23);
+            platePartYTextBox.TabIndex = 26;
+            platePartYTextBox.TextChanged += platePartsControlsChangeValue;
             // 
             // label14
             // 
@@ -382,15 +382,15 @@
             label16.TabIndex = 33;
             label16.Text = "Заключение УЗК";
             // 
-            // utEvaluationsComboBox
+            // evaluationsComboBox
             // 
-            utEvaluationsComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
-            utEvaluationsComboBox.FormattingEnabled = true;
-            utEvaluationsComboBox.Location = new Point(475, 322);
-            utEvaluationsComboBox.Name = "utEvaluationsComboBox";
-            utEvaluationsComboBox.Size = new Size(143, 23);
-            utEvaluationsComboBox.TabIndex = 34;
-            utEvaluationsComboBox.SelectedIndexChanged += OnPlatePartsControlValueChanged;
+            evaluationsComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            evaluationsComboBox.FormattingEnabled = true;
+            evaluationsComboBox.Location = new Point(475, 322);
+            evaluationsComboBox.Name = "evaluationsComboBox";
+            evaluationsComboBox.Size = new Size(143, 23);
+            evaluationsComboBox.TabIndex = 34;
+            evaluationsComboBox.SelectedIndexChanged += platePartsControlsChangeValue;
             // 
             // addPlatePartButton
             // 
@@ -450,15 +450,15 @@
             Controls.Add(label17);
             Controls.Add(deletePlatePartButon);
             Controls.Add(addPlatePartButton);
-            Controls.Add(utEvaluationsComboBox);
+            Controls.Add(evaluationsComboBox);
             Controls.Add(label16);
             Controls.Add(slabNuberTextBox);
             Controls.Add(meltNumberTextBox);
             Controls.Add(meltYearTextBox);
             Controls.Add(label15);
-            Controls.Add(plateXTextBox);
+            Controls.Add(platePartXTextBox);
             Controls.Add(label13);
-            Controls.Add(plateYTextBox);
+            Controls.Add(platePartYTextBox);
             Controls.Add(label14);
             Controls.Add(label12);
             Controls.Add(widthTextBox);
@@ -468,15 +468,15 @@
             Controls.Add(label9);
             Controls.Add(platePartNumberTextBox);
             Controls.Add(label8);
-            Controls.Add(platesListView);
+            Controls.Add(platePartsListView);
             Controls.Add(buttonCancel);
             Controls.Add(buttonOk);
             Controls.Add(plateDataCheckBox);
             Controls.Add(label7);
             Controls.Add(ustModesComboBox);
-            Controls.Add(plateWidthTextBox);
+            Controls.Add(platePartWidthTextBox);
             Controls.Add(label6);
-            Controls.Add(plateLengthTextBox);
+            Controls.Add(platePartLengthTextBox);
             Controls.Add(label5);
             Controls.Add(thicknessTextBox);
             Controls.Add(label4);
@@ -491,7 +491,6 @@
             Name = "EditDefectogramForm";
             StartPosition = FormStartPosition.CenterParent;
             Text = "AddDefectogramForm";
-            Load += EditDefectogramForm_Load;
             ResumeLayout(false);
             PerformLayout();
         }
@@ -505,16 +504,16 @@
         private Label label3;
         private Label label4;
         private TextBox thicknessTextBox;
-        private TextBox plateLengthTextBox;
+        private TextBox platePartLengthTextBox;
         private Label label5;
-        private TextBox plateWidthTextBox;
+        private TextBox platePartWidthTextBox;
         private Label label6;
         private ComboBox ustModesComboBox;
         private Label label7;
         private CheckBox plateDataCheckBox;
         private Button buttonOk;
         private Button buttonCancel;
-        private ListView platesListView;
+        private ListView platePartsListView;
         private Label label8;
         private TextBox platePartNumberTextBox;
         private Label label9;
@@ -523,16 +522,16 @@
         private TextBox lengthTextBox;
         private Label label11;
         private Label label12;
-        private TextBox plateXTextBox;
+        private TextBox platePartXTextBox;
         private Label label13;
-        private TextBox plateYTextBox;
+        private TextBox platePartYTextBox;
         private Label label14;
         private Label label15;
         private TextBox meltYearTextBox;
         private TextBox meltNumberTextBox;
         private TextBox slabNuberTextBox;
         private Label label16;
-        private ComboBox utEvaluationsComboBox;
+        private ComboBox evaluationsComboBox;
         private Button addPlatePartButton;
         private Button deletePlatePartButon;
         private ColumnHeader columnHeader1;

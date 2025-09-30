@@ -9,13 +9,28 @@ public partial class UTLogControl : UserControl
 {
     private readonly DefectogramService _defectogramService;
     private readonly AuthenticationService _authenticationService;
+    private readonly PlateService _plateService;
+    private readonly UserService _userService;
+    private readonly ReportService _reportService;
+    private readonly OrderService _orderService;
+    private readonly CustomerService _customerService;
 
-    private List<DefectogramDTO> _defectograms = new List<DefectogramDTO>();
-
-    public UTLogControl(DefectogramService defectogramService, AuthenticationService authenticationService)
+    public UTLogControl(
+        DefectogramService defectogramService,
+        AuthenticationService authenticationService,
+        PlateService plateService,
+        UserService userService,
+        ReportService reportService,
+        OrderService orderService,
+        CustomerService customerService)
     {
         _defectogramService = defectogramService;
         _authenticationService = authenticationService;
+        _plateService = plateService;
+        _userService = userService;
+        _reportService = reportService;
+        _orderService = orderService;
+        _customerService = customerService;
         InitializeComponent();
     }
 
@@ -24,67 +39,68 @@ public partial class UTLogControl : UserControl
         UpdateData();
     }
 
-    private void entriesList_SelectedIndexChanged(object sender, EventArgs e)
-    {
-        if (entriesList.SelectedIndices.Count == 0)
-            return;
-
-        UpdateEntryDetails(entriesList.SelectedIndices[0]);
-
-    }
-
     private void UpdateData()
     {
         entriesList.Items.Clear();
         entryDetails.Text = string.Empty;
-        _defectograms.Clear();
 
-        _defectograms.AddRange(_defectogramService.GetAll());
+        IEnumerable<DefectogramDTO> defectograms = _defectogramService.GetAll();
+        IEnumerable<USTModeDTO> ustModes = _defectogramService.GetUSTModes();
 
-        foreach (DefectogramDTO defectogram in _defectograms)
+        foreach (DefectogramDTO defectogram in defectograms)
         {
-            ListViewItem listViewItem = new ListViewItem();
+            PlateDTO? plate = _plateService.GetForDefectogram(defectogram.Id).Value;
+            USTModeDTO mode = ustModes.First(m => m.Id == defectogram.UstModeId);
 
-            listViewItem.Text = defectogram.Name;
+            ListViewItem listViewItem = entriesList.Items.Add(defectogram.Name);
+            listViewItem.Tag = defectogram;
             listViewItem.SubItems.Add(defectogram.CreatedAt.ToString("g"));
-            listViewItem.SubItems.Add(defectogram.UstMode?.Name);
+            listViewItem.SubItems.Add(mode.Name);
             listViewItem.SubItems.Add($"{defectogram.Thickness.ToString("F2", CultureInfo.InvariantCulture)} x {defectogram.Width} x {defectogram.Length}");
-            if (defectogram.Plate != null)
+            if (plate != null)
             {
-                listViewItem.SubItems.Add($"{defectogram.Plate.MeltYear}-{defectogram.Plate.MeltNumber}-{defectogram.Plate.SlabNumber}");
+                listViewItem.SubItems.Add($"{plate.MeltYear}-{plate.MeltNumber}-{plate.SlabNumber}");
             }
-
-
-            entriesList.Items.Add(listViewItem);
         }
-
     }
 
-    private void UpdateEntryDetails(int entryIndex)
+    private void entriesList_SelectedIndexChanged(object sender, EventArgs e)
     {
-        DefectogramDTO defectogram = _defectograms[entryIndex];
-
-        StringBuilder content = new StringBuilder();
-
-        content.AppendLine($"{defectogram.Name}");
-        content.AppendLine();
-        content.AppendLine($"Дефектоскопист: {defectogram.Creator?.LastName} {defectogram.Creator?.FirstName} {defectogram.Creator?.MiddleName}");
-        content.AppendLine();
-
-        if (defectogram.Plate != null)
+        if (entriesList.SelectedItems.Count > 0)
         {
-            int i = 0;
-            foreach (var platePart in defectogram.Plate.Parts)
+            DefectogramDTO selectedDefectogram = (DefectogramDTO)entriesList.SelectedItems[0].Tag!;
+            PlateDTO? plate = _plateService.GetForDefectogram(selectedDefectogram.Id).Value;
+            UserDTO? creator = _userService.GetById(selectedDefectogram.UserId).Value;
+
+            StringBuilder content = new StringBuilder();
+            content.AppendLine($"{selectedDefectogram.Name}");
+            content.AppendLine();
+            content.AppendLine($"Дефектоскопист: {creator?.LastName} {creator?.FirstName} {creator?.MiddleName}");
+            content.AppendLine();
+
+            if (plate != null)
             {
-                content.AppendLine($"{++i}: {defectogram.Plate.MeltYear}-{defectogram.Plate.MeltNumber}-{defectogram.Plate.SlabNumber}-{platePart.Number}: {platePart.Evaluation?.Name}");
-                content.AppendLine($"   Размер: {platePart.Width}x{platePart.Length}");
-                content.AppendLine($"   X: {platePart.X}мм");
-                content.AppendLine($"   Y: {platePart.Y}мм");
+                IEnumerable<EvaluationDTO> evaluations = _plateService.GetEvaluations();
+
+                int i = 0;
+                foreach (PlatePartDTO platePart in plate.Parts)
+                {
+                    EvaluationDTO? evaluation = platePart.InspectionResult != null ? evaluations.First(e => e.Id == platePart.InspectionResult.EvaluationId) : null;
+
+                    content.AppendLine($"{++i}: {plate.MeltYear}-{plate.MeltNumber}-{plate.SlabNumber}-{platePart.Number}: {evaluation?.Name}");
+                    content.AppendLine($"   Размер: {platePart.Width}x{platePart.Length}");
+                    content.AppendLine($"   X: {platePart.X}мм");
+                    content.AppendLine($"   Y: {platePart.Y}мм");
+                }
+                content.AppendLine();
+                content.AppendLine();
+                if (plate.ReportId != null)
+                {
+                    content.AppendLine($"Отчет: {plate.ReportId.Value}");
+                }
             }
+            entryDetails.Text = content.ToString();
         }
-
-
-        entryDetails.Text = content.ToString();
     }
 
     private void entriesList_Resize(object sender, EventArgs e)
@@ -94,14 +110,48 @@ public partial class UTLogControl : UserControl
 
     private void addButton_Click(object sender, EventArgs e)
     {
-        EditDefectogramForm form = new EditDefectogramForm();
-        form.USTModes.AddRange(_defectogramService.GetUSTModes());
-        form.Evaluations.AddRange(_defectogramService.GetEvaluations());
-        form.CurentUserId = _authenticationService.GetCurrentUser().Value!.Id;
-        if (form.ShowDialog() == DialogResult.OK && form.CreateDTO != null)
+        EditDefectogramForm form = new EditDefectogramForm(_defectogramService, _plateService, _authenticationService);
+        if (form.ShowDialog() == DialogResult.OK)
+            UpdateData();
+    }
+
+    private void deleteButton_Click(object sender, EventArgs e)
+    {
+        if (entriesList.SelectedItems.Count > 0)
         {
-            _defectogramService.CreateDefectogram(form.CreateDTO);
+            DefectogramDTO selectedDefectogram = (DefectogramDTO)entriesList.SelectedItems[0].Tag!;
+            if (_defectogramService.DeleteDefectogram(selectedDefectogram.Id).IsSuccess)
+                UpdateData();
         }
-        UpdateData();
+    }
+
+    private void addToReport_Click(object sender, EventArgs e)
+    {
+        if (entriesList.SelectedItems.Count > 0)
+        {
+            DefectogramDTO selectedDefectogram = (DefectogramDTO)entriesList.SelectedItems[0].Tag!;
+            PlateDTO? plate = _plateService.GetForDefectogram(selectedDefectogram.Id).Value;
+            if (plate != null)
+            {
+                AddToReportForm form = new AddToReportForm(_reportService, _plateService, _orderService, _customerService, plate);
+                if (form.ShowDialog() == DialogResult.OK)
+                    UpdateData();
+            }
+        }
+    }
+
+    private void removeFromReport_Click(object sender, EventArgs e)
+    {
+        if (entriesList.SelectedItems.Count > 0)
+        {
+            DefectogramDTO selectedDefectogram = (DefectogramDTO)entriesList.SelectedItems[0].Tag!;
+            PlateDTO? plate = _plateService.GetForDefectogram(selectedDefectogram.Id).Value;
+            if (plate != null)
+            {
+                plate.ReportId = null;
+                if (_plateService.UpdatePlate(plate).IsSuccess)
+                    UpdateData();
+            }
+        }
     }
 }

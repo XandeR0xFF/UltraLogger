@@ -67,6 +67,17 @@ namespace UltraLogger.Core.Application.Services
             return reportDTOs;
         }
 
+        public IEnumerable<ReportDTO> GetOpen()
+        {
+            IEnumerable<Report> reports = _reportRepository.GetByOpenState(true);
+            List<ReportDTO> reportDTOs = new List<ReportDTO>();
+            foreach (Report report in reports)
+            {
+                reportDTOs.Add(MapReportToReportDTO(report));
+            }
+            return reportDTOs;
+        }
+
         private ReportDTO MapReportToReportDTO(Report report)
         {
             return new ReportDTO

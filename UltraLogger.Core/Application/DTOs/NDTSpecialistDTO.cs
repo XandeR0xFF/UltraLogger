@@ -1,9 +1,0 @@
-﻿namespace UltraLogger.Core.Application.DTOs
-{
-    public class NDTSpecialistDTO
-    {
-        public string? FirstName { get; set; }
-        public string? LastName { get; set; }
-        public string? MiddleName { get; set; }
-    }
-}

@@ -8,8 +8,7 @@
         public float Thickness { get; set; }
         public int Width { get; set; }
         public int Length { get; set; }
-        public USTModeDTO? UstMode { get; set; }
-        public NDTSpecialistDTO? Creator { get; set; }
-        public DefectogramPlateDTO? Plate { get; set; }
+        public long UstModeId { get; set; }
+        public long UserId { get; set; }
     }
 }

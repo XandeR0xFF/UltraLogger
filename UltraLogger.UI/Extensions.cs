@@ -46,6 +46,7 @@ namespace UltraLogger.Core
             services.AddTransient<ReportService>();
             services.AddTransient<AdministratorService>();
             services.AddTransient<PlateService>();
+            services.AddTransient<UserService>();
         }
 
         public static void AddUIServices(this IServiceCollection services)
