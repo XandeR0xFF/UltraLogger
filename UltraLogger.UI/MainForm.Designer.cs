@@ -29,16 +29,15 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            TreeNode treeNode1 = new TreeNode("Журнал", 0, 0);
-            TreeNode treeNode2 = new TreeNode("Отчеты", 1, 1);
-            TreeNode treeNode3 = new TreeNode("Заказы", 4, 4);
-            TreeNode treeNode4 = new TreeNode("Заказчики", 2, 2);
+            TreeNode treeNode5 = new TreeNode("Журнал", 0, 0);
+            TreeNode treeNode6 = new TreeNode("Отчеты", 1, 1);
+            TreeNode treeNode7 = new TreeNode("Заказы", 4, 4);
+            TreeNode treeNode8 = new TreeNode("Заказчики", 2, 2);
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             statusStrip1 = new StatusStrip();
             menuStrip = new MenuStrip();
             loginMenuItem = new ToolStripMenuItem();
-            toolStripMenuItem2 = new ToolStripMenuItem();
-            toolStripMenuItem3 = new ToolStripMenuItem();
+            switchUser = new ToolStripMenuItem();
             toolStripMenuItem4 = new ToolStripMenuItem();
             toolStripSeparator1 = new ToolStripSeparator();
             exitMenuItem = new ToolStripMenuItem();
@@ -71,23 +70,18 @@
             // loginMenuItem
             // 
             loginMenuItem.Alignment = ToolStripItemAlignment.Right;
-            loginMenuItem.DropDownItems.AddRange(new ToolStripItem[] { toolStripMenuItem2, toolStripMenuItem3 });
+            loginMenuItem.DropDownItems.AddRange(new ToolStripItem[] { switchUser });
             loginMenuItem.Image = Properties.Resources.icons8_user_16;
             loginMenuItem.Name = "loginMenuItem";
             loginMenuItem.Size = new Size(93, 20);
             loginMenuItem.Text = "User Name";
             // 
-            // toolStripMenuItem2
+            // switchUser
             // 
-            toolStripMenuItem2.Name = "toolStripMenuItem2";
-            toolStripMenuItem2.Size = new Size(236, 22);
-            toolStripMenuItem2.Text = "Параметры учетной записи...";
-            // 
-            // toolStripMenuItem3
-            // 
-            toolStripMenuItem3.Name = "toolStripMenuItem3";
-            toolStripMenuItem3.Size = new Size(236, 22);
-            toolStripMenuItem3.Text = "Сменить пользователя";
+            switchUser.Name = "switchUser";
+            switchUser.Size = new Size(200, 22);
+            switchUser.Text = "Сменить пользователя";
+            switchUser.Click += switchUser_Click;
             // 
             // toolStripMenuItem4
             // 
@@ -99,13 +93,13 @@
             // toolStripSeparator1
             // 
             toolStripSeparator1.Name = "toolStripSeparator1";
-            toolStripSeparator1.Size = new Size(177, 6);
+            toolStripSeparator1.Size = new Size(147, 6);
             // 
             // exitMenuItem
             // 
             exitMenuItem.Name = "exitMenuItem";
             exitMenuItem.ShortcutKeys = Keys.Alt | Keys.F4;
-            exitMenuItem.Size = new Size(180, 22);
+            exitMenuItem.Size = new Size(150, 22);
             exitMenuItem.Text = "Выход";
             exitMenuItem.Click += exitMenuItem_Click;
             // 
@@ -140,23 +134,23 @@
             navigationMenu.ItemHeight = 28;
             navigationMenu.Location = new Point(0, 24);
             navigationMenu.Name = "navigationMenu";
-            treeNode1.ImageIndex = 0;
-            treeNode1.Name = "Log";
-            treeNode1.SelectedImageIndex = 0;
-            treeNode1.Text = "Журнал";
-            treeNode2.ImageIndex = 1;
-            treeNode2.Name = "Reports";
-            treeNode2.SelectedImageIndex = 1;
-            treeNode2.Text = "Отчеты";
-            treeNode3.ImageIndex = 4;
-            treeNode3.Name = "Orders";
-            treeNode3.SelectedImageIndex = 4;
-            treeNode3.Text = "Заказы";
-            treeNode4.ImageIndex = 2;
-            treeNode4.Name = "Customers";
-            treeNode4.SelectedImageIndex = 2;
-            treeNode4.Text = "Заказчики";
-            navigationMenu.Nodes.AddRange(new TreeNode[] { treeNode1, treeNode2, treeNode3, treeNode4 });
+            treeNode5.ImageIndex = 0;
+            treeNode5.Name = "Log";
+            treeNode5.SelectedImageIndex = 0;
+            treeNode5.Text = "Журнал";
+            treeNode6.ImageIndex = 1;
+            treeNode6.Name = "Reports";
+            treeNode6.SelectedImageIndex = 1;
+            treeNode6.Text = "Отчеты";
+            treeNode7.ImageIndex = 4;
+            treeNode7.Name = "Orders";
+            treeNode7.SelectedImageIndex = 4;
+            treeNode7.Text = "Заказы";
+            treeNode8.ImageIndex = 2;
+            treeNode8.Name = "Customers";
+            treeNode8.SelectedImageIndex = 2;
+            treeNode8.Text = "Заказчики";
+            navigationMenu.Nodes.AddRange(new TreeNode[] { treeNode5, treeNode6, treeNode7, treeNode8 });
             navigationMenu.SelectedImageIndex = 0;
             navigationMenu.ShowLines = false;
             navigationMenu.ShowPlusMinus = false;
@@ -209,7 +203,7 @@
         private MenuStrip menuStrip;
         private ToolStripMenuItem loginMenuItem;
         private ToolStripMenuItem toolStripMenuItem2;
-        private ToolStripMenuItem toolStripMenuItem3;
+        private ToolStripMenuItem switchUser;
         private TreeView navigationMenu;
         private ImageList imageListNavigation;
         private ToolStripMenuItem toolStripMenuItem4;

@@ -96,5 +96,10 @@ namespace UltraLogger.UI
             UserManagementForm form = new UserManagementForm(_administratorService, _userService);
             form.ShowDialog();
         }
+
+        private void switchUser_Click(object sender, EventArgs e)
+        {
+            ShowAuthenticationView();
+        }
     }
 }
