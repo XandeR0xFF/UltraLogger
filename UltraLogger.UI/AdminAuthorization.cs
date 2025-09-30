@@ -1,20 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using UltraLogger.Core.Application.Common.ResultPattern;
+using UltraLogger.Core.Application.Services;
 
 namespace UltraLogger.UI
 {
     public partial class AdminAuthorization : Form
     {
-        public AdminAuthorization()
+        private readonly AdministratorService _administratorService;
+
+        public AdminAuthorization(AdministratorService administratorService)
         {
+            _administratorService = administratorService;
             InitializeComponent();
+        }
+
+        private void okButton_Click(object sender, EventArgs e)
+        {
+            Result result = _administratorService.Authenticate(passwordTextBox.Text);
+            if (result.IsSuccess)
+            {
+                DialogResult = DialogResult.OK;
+                Close();
+            }
+            errorLabel.Text = result.Error.Description;
         }
     }
 }

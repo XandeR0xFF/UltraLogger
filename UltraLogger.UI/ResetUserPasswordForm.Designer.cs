@@ -1,6 +1,6 @@
 ﻿namespace UltraLogger.UI
 {
-    partial class AdminAuthorization
+    partial class ResetUserPasswordForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,84 +28,84 @@
         /// </summary>
         private void InitializeComponent()
         {
+            label1 = new Label();
             passwordTextBox = new TextBox();
             okButton = new Button();
             cancelButton = new Button();
-            label1 = new Label();
             errorLabel = new Label();
             SuspendLayout();
             // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new Point(17, 28);
+            label1.Name = "label1";
+            label1.Size = new Size(88, 15);
+            label1.TabIndex = 0;
+            label1.Text = "Новый пароль";
+            // 
             // passwordTextBox
             // 
-            passwordTextBox.Location = new Point(43, 29);
+            passwordTextBox.Location = new Point(111, 25);
             passwordTextBox.Name = "passwordTextBox";
-            passwordTextBox.Size = new Size(203, 23);
-            passwordTextBox.TabIndex = 0;
-            passwordTextBox.UseSystemPasswordChar = true;
+            passwordTextBox.Size = new Size(178, 23);
+            passwordTextBox.TabIndex = 1;
             // 
             // okButton
             // 
-            okButton.Location = new Point(43, 87);
+            okButton.Location = new Point(133, 82);
             okButton.Name = "okButton";
             okButton.Size = new Size(75, 23);
-            okButton.TabIndex = 1;
+            okButton.TabIndex = 2;
             okButton.Text = "Ок";
             okButton.UseVisualStyleBackColor = true;
             okButton.Click += okButton_Click;
             // 
             // cancelButton
             // 
-            cancelButton.Location = new Point(171, 87);
+            cancelButton.Location = new Point(214, 82);
             cancelButton.Name = "cancelButton";
             cancelButton.Size = new Size(75, 23);
-            cancelButton.TabIndex = 2;
+            cancelButton.TabIndex = 3;
             cancelButton.Text = "Отмена";
             cancelButton.UseVisualStyleBackColor = true;
-            // 
-            // label1
-            // 
-            label1.Location = new Point(40, 11);
-            label1.Margin = new Padding(0);
-            label1.Name = "label1";
-            label1.Size = new Size(203, 15);
-            label1.TabIndex = 3;
-            label1.Text = "Пароль администратора";
             // 
             // errorLabel
             // 
             errorLabel.ForeColor = Color.Red;
-            errorLabel.Location = new Point(40, 55);
+            errorLabel.Location = new Point(17, 58);
             errorLabel.Name = "errorLabel";
-            errorLabel.Size = new Size(206, 23);
+            errorLabel.Size = new Size(272, 21);
             errorLabel.TabIndex = 4;
             // 
-            // AdminAuthorization
+            // ResetUserPasswordForm
             // 
             AcceptButton = okButton;
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             CancelButton = cancelButton;
-            ClientSize = new Size(285, 122);
+            ClientSize = new Size(301, 117);
             Controls.Add(errorLabel);
-            Controls.Add(label1);
             Controls.Add(cancelButton);
             Controls.Add(okButton);
             Controls.Add(passwordTextBox);
+            Controls.Add(label1);
             FormBorderStyle = FormBorderStyle.FixedDialog;
             MaximizeBox = false;
             MinimizeBox = false;
-            Name = "AdminAuthorization";
+            Name = "ResetUserPasswordForm";
             StartPosition = FormStartPosition.CenterParent;
+            Text = "ResetUserPasswordForm";
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
 
+        private Label label1;
         private TextBox passwordTextBox;
         private Button okButton;
         private Button cancelButton;
-        private Label label1;
         private Label errorLabel;
     }
 }

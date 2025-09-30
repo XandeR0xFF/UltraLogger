@@ -51,7 +51,7 @@ namespace UltraLogger.UI
         private void ShowAuthenticationView()
         {
             loginMenuItem.Visible = false;
-            AuthenticationForm form = new AuthenticationForm(_authenticationService, _administratorService);
+            AuthenticationForm form = new AuthenticationForm(_authenticationService, _administratorService, _userService);
             form.Owner = this;
             if (form.ShowDialog() == DialogResult.Cancel)
             {
@@ -93,7 +93,7 @@ namespace UltraLogger.UI
 
         private void userManagementMenuItem_Click(object sender, EventArgs e)
         {
-            UserManagementForm form = new UserManagementForm(_administratorService);
+            UserManagementForm form = new UserManagementForm(_administratorService, _userService);
             form.ShowDialog();
         }
     }

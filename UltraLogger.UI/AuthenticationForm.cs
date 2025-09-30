@@ -6,11 +6,13 @@ public partial class AuthenticationForm : Form
 {
     private readonly AuthenticationService _authenticationService;
     private readonly AdministratorService _administratorService;
+    private readonly UserService _userService;
 
-    public AuthenticationForm(AuthenticationService authenticationService, AdministratorService administratorService)
+    public AuthenticationForm(AuthenticationService authenticationService, AdministratorService administratorService, UserService userService)
     {
         _authenticationService = authenticationService;
         _administratorService = administratorService;
+        _userService = userService;
 
         InitializeComponent();
         errorLabel.Visible = false;
@@ -31,7 +33,7 @@ public partial class AuthenticationForm : Form
 
     private void userManagementButton_Click(object sender, EventArgs e)
     {
-        UserManagementForm form = new UserManagementForm(_administratorService);
+        UserManagementForm form = new UserManagementForm(_administratorService, _userService);
         form.ShowDialog();
     }
 }
